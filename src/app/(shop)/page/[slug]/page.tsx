@@ -4,8 +4,12 @@ import { ChevronLeft } from 'lucide-react'
 import { getPageBySlug, getPages } from '@/lib/site-data'
 
 export async function generateStaticParams() {
-  const pages = await getPages(true)
-  return pages.map((page) => ({ slug: page.slug }))
+  try {
+    const pages = await getPages(true)
+    return pages.map((page) => ({ slug: page.slug }))
+  } catch {
+    return [{ slug: 'privacy-policy' }, { slug: 'terms-and-conditions' }]
+  }
 }
 
 export default async function PageRoute({ params }: { params: Promise<{ slug: string }> }) {

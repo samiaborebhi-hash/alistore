@@ -55,8 +55,9 @@ export default async function AdminPromotions({ searchParams }: { searchParams: 
     'use server'
     const id = formData.get('id') as string
     await db.promotion.delete({ where: { id } })
-    revalidateTag('promotions', 'default')
+    revalidateTag('promotions')
     revalidatePath('/admin/promotions')
+    redirect('/admin/promotions')
   }
 
   const today = new Date().toISOString().split('T')[0]

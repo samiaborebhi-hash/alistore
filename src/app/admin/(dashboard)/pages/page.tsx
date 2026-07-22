@@ -24,7 +24,7 @@ export default async function AdminPages({ searchParams }: { searchParams: Promi
         order: parseInt(formData.get('order') as string) || 0,
       },
     })
-    revalidateTag('pages', 'default')
+    revalidateTag('pages')
     revalidatePath('/admin/pages')
     revalidatePath('/')
   }
@@ -47,7 +47,7 @@ export default async function AdminPages({ searchParams }: { searchParams: Promi
         order: parseInt(formData.get('order') as string) || 0,
       },
     })
-    revalidateTag('pages', 'default')
+    revalidateTag('pages')
     revalidatePath('/admin/pages')
     revalidatePath('/')
   }
@@ -56,7 +56,7 @@ export default async function AdminPages({ searchParams }: { searchParams: Promi
     'use server'
     const id = formData.get('id') as string
     await db.page.delete({ where: { id } })
-    revalidateTag('pages', 'default')
+    revalidateTag('pages')
     revalidatePath('/admin/pages')
     revalidatePath('/')
   }
