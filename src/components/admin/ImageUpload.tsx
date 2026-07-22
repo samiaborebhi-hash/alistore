@@ -21,8 +21,8 @@ export function ImageUpload({ existingImages = [] }: Props) {
     const newUrls: string[] = []
 
     for (const file of Array.from(files)) {
-      if (file.size > 5 * 1024 * 1024) {
-        alert(`الملف ${file.name} كبير جداً. الحد الأقصى 5MB`)
+      if (file.size > 2 * 1024 * 1024) {
+        alert(`الملف ${file.name} كبير جداً. الحد الأقصى 2MB`)
         continue
       }
       if (!file.type.startsWith('image/')) {
@@ -30,20 +30,24 @@ export function ImageUpload({ existingImages = [] }: Props) {
         continue
       }
 
-      const formData = new FormData()
-      formData.append('file', file)
-
+      // Convert to base64 in the browser — no server upload needed
       try {
-        const res = await fetch('/api/upload', { method: 'POST', body: formData })
-        const data = await res.json()
-        if (data.url) newUrls.push(data.url)
+        const reader = new FileReader()
+        const dataUrl = await new Promise<string>((resolve, reject) => {
+          reader.onload = () => resolve(reader.result as string)
+          reader.onerror = reject
+          reader.readAsDataURL(file)
+        })
+        newUrls.push(dataUrl)
       } catch {
-        alert(`فشل رفع ${file.name}`)
+        alert(`فشل قراءة ${file.name}`)
       }
     }
 
     setImages((prev) => [...prev, ...newUrls])
     setUploading(false)
+    // Reset input so same file can be selected again
+    if (fileRef.current) fileRef.current.value = ''
   }
 
   function removeImage(index: number) {
@@ -86,7 +90,7 @@ export function ImageUpload({ existingImages = [] }: Props) {
         </button>
       </div>
       <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleFileChange} className="hidden" />
-      <p className="text-xs text-gray-400">الصيغ المدعومة: JPG, PNG, WebP. الحد الأقصى: 5MB للصورة</p>
+      <p className="text-xs text-gray-400">الصيغ المدعومة: JPG, PNG, WebP. الحد الأقصى: 2MB للصورة</p>
     </div>
   )
 }
