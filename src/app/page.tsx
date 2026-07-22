@@ -4,6 +4,7 @@ import { PromotionalBanner } from '@/components/shop/PromotionalBanner'
 import { CinematicSection } from '@/components/shop/CinematicSection'
 import { CinematicProductCard } from '@/components/shop/CinematicProductCard'
 import Link from 'next/link'
+export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
   const products = await db.product.findMany({
