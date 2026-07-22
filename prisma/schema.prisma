@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String?
+  email        String   @unique
+  passwordHash String
+  role         String   @default("admin")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  nameAr    String
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Product {
+  id              String      @id @default(cuid())
+  name            String
+  nameAr          String
+  description     String?
+  descriptionAr   String?
+  price           Float
+  wholesalePrice  Float?
+  minWholesaleQty Int         @default(10)
+  stock           Int         @default(0)
+  images          String      @default("[]")
+  categoryId      String
+  category        Category    @relation(fields: [categoryId], references: [id])
+  isActive        Boolean     @default(true)
+  isFeatured      Boolean     @default(false)
+  tags            String      @default("[]")
+  reviews         Review[]
+  orderItems      OrderItem[]
+  cartItems       CartItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      String
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  customerName  String
+  customerPhone String
+  customerEmail String?
+  type          String      @default("retail")
+  status        String      @default("pending")
+  totalAmount   Float
+  notes         String?
+  items         OrderItem[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}
+
+model SiteSettings {
+  id             String   @id @default("main")
+  siteName       String   @default("متجر التجميل")
+  siteNameEn     String   @default("Beauty Store")
+  whatsappNumber String   @default("966500000000")
+  email          String?
+  address        String?
+  currency       String   @default("SAR")
+  aboutText      String?
+  aboutTextAr    String?
+  logo           String?
+  logoUrl        String?
+  socialLinks    String   @default("{}")
+  instagramUrl   String?
+  updatedAt      DateTime @updatedAt
+}
+
+model MenuItem {
+  id       String @id @default(cuid())
+  label    String
+  labelAr  String?
+  url      String
+  position String @default("header")
+  order    Int    @default(0)
+}
+
+model Promotion {
+  id              String    @id @default(cuid())
+  name            String
+  description     String?
+  discountPercent Float
+  startDate       DateTime  @default(now())
+  endDate         DateTime?
+  isActive        Boolean   @default(true)
+  productIds      String    @default("[]")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  sessionId String?    @unique
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  cartId    String
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int     @default(1)
+  price     Float   @default(0)
+
+  @@unique([cartId, productId])
+}
+
+model Page {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  title        String
+  titleAr      String?
+  content      String   @default("")
+  contentType  String   @default("text")
+  isActive     Boolean  @default(true)
+  showInFooter Boolean  @default(false)
+  footerLabel  String?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

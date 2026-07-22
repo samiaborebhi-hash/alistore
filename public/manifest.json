@@ -1,0 +1,19 @@
+{
+  "name": "متجر التجميل الفاخر",
+  "short_name": "متجر التجميل",
+  "description": "متجر متخصص في منتجات التجميل والعناية الرجالية والنسائية - جملة وتجزئة",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#9333ea",
+  "orientation": "any",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
