@@ -25,7 +25,7 @@ export default async function AdminPromotions({ searchParams }: { searchParams: 
         productIds: JSON.stringify(selected),
       },
     })
-    revalidateTag('promotions', 'default')
+    revalidateTag('promotions')
     revalidatePath('/admin/promotions')
     redirect('/admin/promotions')
   }
@@ -46,7 +46,7 @@ export default async function AdminPromotions({ searchParams }: { searchParams: 
         productIds: JSON.stringify(selected),
       },
     })
-    revalidateTag('promotions', 'default')
+    revalidateTag('promotions')
     revalidatePath('/admin/promotions')
     redirect('/admin/promotions')
   }

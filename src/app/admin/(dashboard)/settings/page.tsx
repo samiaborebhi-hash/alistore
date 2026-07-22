@@ -38,7 +38,7 @@ export default async function AdminSettings() {
             aboutTextAr: (formData.get('aboutTextAr') as string) || null,
           },
         })
-        revalidateTag('site-settings', 'default')
+        revalidateTag('site-settings')
         revalidatePath('/')
         revalidatePath('/admin/settings')
       }} className="space-y-6">

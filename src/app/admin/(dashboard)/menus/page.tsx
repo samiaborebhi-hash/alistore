@@ -23,7 +23,7 @@ export default async function AdminMenus() {
         order: parseInt(formData.get('order') as string) || 0,
       },
     })
-    revalidateTag('menu-items', 'default')
+    revalidateTag('menu-items')
     revalidatePath('/admin/menus')
   }
 
@@ -40,7 +40,7 @@ export default async function AdminMenus() {
         order: parseInt(formData.get('order') as string) || 0,
       },
     })
-    revalidateTag('menu-items', 'default')
+    revalidateTag('menu-items')
     revalidatePath('/admin/menus')
   }
 
@@ -48,7 +48,7 @@ export default async function AdminMenus() {
     'use server'
     const id = formData.get('id') as string
     await db.menuItem.delete({ where: { id } })
-    revalidateTag('menu-items', 'default')
+    revalidateTag('menu-items')
     revalidatePath('/admin/menus')
   }
 
