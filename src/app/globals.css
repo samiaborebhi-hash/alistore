@@ -60,13 +60,13 @@ body {
 
 /* Section with cosmetic gradient - semi-transparent to show background */
 .section-rose {
-  background: linear-gradient(135deg, rgba(255,241,242,0.85) 0%, rgba(253,242,248,0.85) 50%, rgba(250,245,255,0.85) 100%);
+  background: linear-gradient(135deg, rgba(255,241,242,0.6) 0%, rgba(253,242,248,0.6) 50%, rgba(250,245,255,0.6) 100%);
 }
 .section-purple {
-  background: linear-gradient(135deg, rgba(250,245,255,0.85) 0%, rgba(253,242,248,0.85) 50%, rgba(255,247,237,0.85) 100%);
+  background: linear-gradient(135deg, rgba(250,245,255,0.6) 0%, rgba(253,242,248,0.6) 50%, rgba(255,247,237,0.6) 100%);
 }
 .section-gold {
-  background: linear-gradient(135deg, rgba(255,247,237,0.85) 0%, rgba(253,242,248,0.85) 50%, rgba(255,241,242,0.85) 100%);
+  background: linear-gradient(135deg, rgba(255,247,237,0.6) 0%, rgba(253,242,248,0.6) 50%, rgba(255,241,242,0.6) 100%);
 }
 
 /* Glass card */
