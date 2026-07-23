@@ -36,10 +36,10 @@ html {
 body {
   font-family: 'Cairo', sans-serif;
   background: var(--background);
-  background-image: 
-    radial-gradient(ellipse at 20% 50%, rgba(244, 63, 94, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(147, 51, 234, 0.05) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(251, 191, 36, 0.04) 0%, transparent 50%);
+  background-image: url('/nove-bg.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   background-attachment: fixed;
   color: var(--text);
 }
@@ -58,15 +58,15 @@ body {
   z-index: 0;
 }
 
-/* Section with cosmetic gradient */
+/* Section with cosmetic gradient - semi-transparent to show background */
 .section-rose {
-  background: linear-gradient(135deg, #fff1f2 0%, #fdf2f8 50%, #faf5ff 100%);
+  background: linear-gradient(135deg, rgba(255,241,242,0.85) 0%, rgba(253,242,248,0.85) 50%, rgba(250,245,255,0.85) 100%);
 }
 .section-purple {
-  background: linear-gradient(135deg, #faf5ff 0%, #fdf2f8 50%, #fff7ed 100%);
+  background: linear-gradient(135deg, rgba(250,245,255,0.85) 0%, rgba(253,242,248,0.85) 50%, rgba(255,247,237,0.85) 100%);
 }
 .section-gold {
-  background: linear-gradient(135deg, #fff7ed 0%, #fdf2f8 50%, #fff1f2 100%);
+  background: linear-gradient(135deg, rgba(255,247,237,0.85) 0%, rgba(253,242,248,0.85) 50%, rgba(255,241,242,0.85) 100%);
 }
 
 /* Glass card */
