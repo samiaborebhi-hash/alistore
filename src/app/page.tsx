@@ -6,32 +6,60 @@ import { CinematicProductCard } from '@/components/shop/CinematicProductCard'
 import Link from 'next/link'
 export const dynamic = 'force-dynamic'
 
+async function getContent(): Promise<Record<string, string>> {
+  try {
+    const blocks = await db.contentBlock.findMany()
+    const map: Record<string, string> = {}
+    blocks.forEach(b => { map[b.key] = b.value })
+    return map
+  } catch {
+    return {}
+  }
+}
+
 export default async function HomePage() {
-  const products = await db.product.findMany({
-    where: { isActive: true },
-    include: { category: true, reviews: { select: { rating: true } } },
-    take: 8,
-    orderBy: { createdAt: 'desc' },
-  })
+  const [products, content] = await Promise.all([
+    db.product.findMany({
+      where: { isActive: true },
+      include: { category: true, reviews: { select: { rating: true } } },
+      take: 8,
+      orderBy: { createdAt: 'desc' },
+    }),
+    getContent(),
+  ])
+
+  const c = (key: string, fallback: string) => content[key] || fallback
 
   return (
     <>
-      <CinematicHero />
+      <CinematicHero
+        badge={c('hero_badge', 'منتجات أصلية 100% - جملة وتجزئة')}
+        title={c('hero_title', 'متجر')}
+        titleHighlight={c('hero_title_highlight', 'التجميل')}
+        subtitle={c('hero_subtitle', 'وجهتك الأولى لمنتجات التجميل الرجالية والنسائية. نوفر أفضل الماركات العالمية بأسعار تنافسية للجملة والتجزئة')}
+        btnMen={c('hero_btn_men', 'تسوق رجالي')}
+        btnWomen={c('hero_btn_women', 'تسوق نسائي')}
+      />
 
-      <PromotionalBanner />
+      <PromotionalBanner
+        badge={c('promo_badge', 'عروض محدودة')}
+        title={c('promo_title', 'خصم يصل إلى 30% على منتجات الجملة')}
+        text={c('promo_text', 'استفد من الأسعار التنافسية للكميات الكبيرة. عرض ساري لفترة محدودة فقط!')}
+        btn={c('promo_btn', 'تصفح عروض الجملة')}
+      />
 
-      <CinematicSection title="منتجات مميزة" subtitle="أفضل منتجات التجميل المختارة بعناية" variant={0}>
+      <CinematicSection title={c('section_products_title', 'منتجات مميزة')} subtitle={c('section_products_subtitle', 'أفضل منتجات التجميل المختارة بعناية')} variant={0}>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {products.map((p, i) => (
             <CinematicProductCard key={p.id} product={p} index={i} />
           ))}
         </div>
         {products.length === 0 && (
-          <p className="text-center text-gray-500">لا توجد منتجات مميزة حالياً</p>
+          <p className="text-center text-gray-500 py-12">لا توجد منتجات حالياً</p>
         )}
       </CinematicSection>
 
-      <CinematicSection title="تسوق حسب القسم" subtitle="اختر القسم المناسب لك" variant={1}>
+      <CinematicSection title={c('section_categories_title', 'تسوق حسب القسم')} subtitle={c('section_categories_subtitle', 'اختر القسم المناسب لك')} variant={1}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
           <Link href="/men" className="group relative h-64 rounded-2xl overflow-hidden shadow-lg">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-800" />
@@ -48,13 +76,13 @@ export default async function HomePage() {
         </div>
       </CinematicSection>
 
-      <CinematicSection title="البيع بالجملة" subtitle="أسعار خاصة للكميات الكبيرة" variant={2}>
+      <CinematicSection title={c('section_wholesale_title', 'البيع بالجملة')} subtitle={c('section_wholesale_subtitle', 'أسعار خاصة للكميات الكبيرة')} variant={2}>
         <div className="text-center">
           <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
-            نوفر أسعار جملة تنافسية للمحلات والموزعين. الحد الأدنى للطلب 10 قطع.
+            {c('section_wholesale_text', 'نوفر أسعار جملة تنافسية للمحلات والموزعين. الحد الأدنى للطلب 10 قطع.')}
           </p>
           <Link href="/wholesale" className="inline-flex px-8 py-4 bg-gradient-to-r from-purple-600 to-rose-500 text-white rounded-full text-lg font-semibold hover:shadow-xl transition-shadow">
-            تصفح عروض الجملة
+            {c('section_wholesale_btn', 'تصفح عروض الجملة')}
           </Link>
         </div>
       </CinematicSection>

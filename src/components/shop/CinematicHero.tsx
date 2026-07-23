@@ -4,7 +4,14 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Sparkles, ArrowDown, Star } from 'lucide-react'
 
-export function CinematicHero() {
+export function CinematicHero({ badge, title, titleHighlight, subtitle, btnMen, btnWomen }: {
+  badge?: string
+  title?: string
+  titleHighlight?: string
+  subtitle?: string
+  btnMen?: string
+  btnWomen?: string
+}) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Semi-transparent overlay to show background image */}
@@ -69,7 +76,7 @@ export function CinematicHero() {
         >
           <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/70 backdrop-blur-md border border-purple-100 rounded-full text-purple-600 text-sm mb-8 shadow-lg shadow-purple-100/50">
             <Sparkles size={14} className="text-amber-400" />
-            منتجات أصلية 100% - جملة وتجزئة
+            {badge || 'منتجات أصلية 100% - جملة وتجزئة'}
           </div>
         </motion.div>
 
@@ -79,8 +86,8 @@ export function CinematicHero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-gray-800 mb-6 leading-tight break-words"
         >
-          متجر
-          <span className="bg-gradient-to-r from-purple-600 via-rose-500 to-amber-500 bg-clip-text text-transparent"> التجميل</span>
+          {title || 'متجر'}
+          <span className="bg-gradient-to-r from-purple-600 via-rose-500 to-amber-500 bg-clip-text text-transparent"> {titleHighlight || 'التجميل'}</span>
         </motion.h1>
 
         <motion.p
@@ -89,7 +96,7 @@ export function CinematicHero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-base sm:text-lg md:text-xl text-gray-500 mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-2"
         >
-          وجهتك الأولى لمنتجات التجميل الرجالية والنسائية. نوفر أفضل الماركات العالمية بأسعار تنافسية للجملة والتجزئة
+          {subtitle || 'وجهتك الأولى لمنتجات التجميل الرجالية والنسائية. نوفر أفضل الماركات العالمية بأسعار تنافسية للجملة والتجزئة'}
         </motion.p>
 
         <motion.div
@@ -99,11 +106,11 @@ export function CinematicHero() {
           className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4"
         >
           <Link href="/men" className="group relative px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-2xl font-semibold text-base sm:text-lg overflow-hidden hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:-translate-y-0.5">
-            <span className="relative z-10 flex items-center justify-center gap-2">تسوق رجالي →</span>
+            <span className="relative z-10 flex items-center justify-center gap-2">{btnMen || 'تسوق رجالي'} →</span>
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity" />
           </Link>
           <Link href="/women" className="group relative px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-rose-500 to-rose-600 text-white rounded-2xl font-semibold text-base sm:text-lg overflow-hidden hover:shadow-2xl hover:shadow-rose-500/25 transition-all duration-300 hover:-translate-y-0.5">
-            <span className="relative z-10 flex items-center justify-center gap-2">تسوق نسائي →</span>
+            <span className="relative z-10 flex items-center justify-center gap-2">{btnWomen || 'تسوق نسائي'} →</span>
             <div className="absolute inset-0 bg-gradient-to-r from-rose-400 to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity" />
           </Link>
         </motion.div>

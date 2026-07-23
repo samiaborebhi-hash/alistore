@@ -4,7 +4,12 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Percent, Sparkles, ArrowLeft } from 'lucide-react'
 
-export function PromotionalBanner() {
+export function PromotionalBanner({ badge, title, text, btn }: {
+  badge?: string
+  title?: string
+  text?: string
+  btn?: string
+}) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-r from-rose-500 via-purple-600 to-violet-700 py-10 md:py-14 lg:py-16">
       {/* Background decorative elements */}
@@ -28,18 +33,13 @@ export function PromotionalBanner() {
           >
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
               <Sparkles size={16} />
-              عروض محدودة
+              {badge || 'عروض محدودة'}
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-              خصم يصل إلى
-              <span className="inline-flex items-center gap-1 mx-1 sm:mx-2 text-amber-300">
-                <Percent size={24} className="sm:w-7 sm:h-7 md:w-8 md:h-8" />
-                30%
-              </span>
-              على منتجات الجملة
+              {title || 'خصم يصل إلى 30% على منتجات الجملة'}
             </h2>
             <p className="text-white/80 text-base sm:text-lg mb-5 md:mb-6 max-w-xl mx-auto md:mx-0 px-2 md:px-0">
-              استفد من الأسعار التنافسية للكميات الكبيرة. عرض ساري لفترة محدودة فقط!
+              {text || 'استفد من الأسعار التنافسية للكميات الكبيرة. عرض ساري لفترة محدودة فقط!'}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start px-4 md:px-0">
