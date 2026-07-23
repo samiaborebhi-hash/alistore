@@ -64,7 +64,7 @@ export const getMenuItems = unstable_cache(
     )
   },
   ['menu-items'],
-  { revalidate: 3600, tags: ['menu-items'] }
+  { revalidate: 60, tags: ['menu-items'] }
 )
 
 export const getActivePromotions = unstable_cache(
