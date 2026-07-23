@@ -18,14 +18,19 @@ async function getContent(): Promise<Record<string, string>> {
 }
 
 export default async function HomePage() {
-  const [products, content] = await Promise.all([
-    db.product.findMany({
-      where: { isActive: true },
-      include: { category: true, reviews: { select: { rating: true } } },
-      take: 8,
-      orderBy: { createdAt: 'desc' },
-    }),
+  const [content, collections] = await Promise.all([
     getContent(),
+    db.collection.findMany({
+      where: { isActive: true, showOnHome: true },
+      include: {
+        products: {
+          include: {
+            product: { include: { category: true, reviews: { select: { rating: true } } } }
+          }
+        }
+      },
+      orderBy: { order: 'asc' },
+    }),
   ])
 
   const c = (key: string, fallback: string) => content[key] || fallback
@@ -48,34 +53,27 @@ export default async function HomePage() {
         btn={c('promo_btn', 'تصفح عروض الجملة')}
       />
 
-      <CinematicSection title={c('section_products_title', 'منتجات مميزة')} subtitle={c('section_products_subtitle', 'أفضل منتجات التجميل المختارة بعناية')} variant={0}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products.map((p, i) => (
-            <CinematicProductCard key={p.id} product={p} index={i} />
-          ))}
-        </div>
-        {products.length === 0 && (
-          <p className="text-center text-gray-500 py-12">لا توجد منتجات حالياً</p>
-        )}
-      </CinematicSection>
-
-      <CinematicSection title={c('section_categories_title', 'تسوق حسب القسم')} subtitle={c('section_categories_subtitle', 'اختر القسم المناسب لك')} variant={1}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          <Link href="/men" className="group relative h-64 rounded-2xl overflow-hidden shadow-lg">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-800" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <h3 className="text-3xl font-bold text-white group-hover:scale-110 transition-transform">رجالي</h3>
+      {/* Collections from admin */}
+      {collections.map((col, idx) => {
+        const products = col.products.map(pc => pc.product).filter(p => p.isActive).slice(0, 8)
+        if (products.length === 0) return null
+        return (
+          <CinematicSection
+            key={col.id}
+            title={col.nameAr}
+            subtitle={col.descriptionAr || undefined}
+            variant={idx % 3}
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {products.map((p, i) => (
+                <CinematicProductCard key={p.id} product={p} index={i} />
+              ))}
             </div>
-          </Link>
-          <Link href="/women" className="group relative h-64 rounded-2xl overflow-hidden shadow-lg">
-            <div className="absolute inset-0 bg-gradient-to-r from-rose-500 to-rose-700" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <h3 className="text-3xl font-bold text-white group-hover:scale-110 transition-transform">نسائي</h3>
-            </div>
-          </Link>
-        </div>
-      </CinematicSection>
+          </CinematicSection>
+        )
+      })}
 
+      {/* Wholesale section */}
       <CinematicSection title={c('section_wholesale_title', 'البيع بالجملة')} subtitle={c('section_wholesale_subtitle', 'أسعار خاصة للكميات الكبيرة')} variant={2}>
         <div className="text-center">
           <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">

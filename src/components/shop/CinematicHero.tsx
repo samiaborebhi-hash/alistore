@@ -105,12 +105,12 @@ export function CinematicHero({ badge, title, titleHighlight, subtitle, btnMen, 
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4"
         >
-          <Link href="/men" className="group relative px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-2xl font-semibold text-base sm:text-lg overflow-hidden hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:-translate-y-0.5">
-            <span className="relative z-10 flex items-center justify-center gap-2">{btnMen || 'تسوق رجالي'} →</span>
+          <Link href="/products" className="group relative px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-2xl font-semibold text-base sm:text-lg overflow-hidden hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:-translate-y-0.5">
+            <span className="relative z-10 flex items-center justify-center gap-2">{btnMen || 'تصفح المنتجات'} →</span>
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity" />
           </Link>
-          <Link href="/women" className="group relative px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-rose-500 to-rose-600 text-white rounded-2xl font-semibold text-base sm:text-lg overflow-hidden hover:shadow-2xl hover:shadow-rose-500/25 transition-all duration-300 hover:-translate-y-0.5">
-            <span className="relative z-10 flex items-center justify-center gap-2">{btnWomen || 'تسوق نسائي'} →</span>
+          <Link href="/wholesale" className="group relative px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-rose-500 to-rose-600 text-white rounded-2xl font-semibold text-base sm:text-lg overflow-hidden hover:shadow-2xl hover:shadow-rose-500/25 transition-all duration-300 hover:-translate-y-0.5">
+            <span className="relative z-10 flex items-center justify-center gap-2">{btnWomen || 'عروض الجملة'} →</span>
             <div className="absolute inset-0 bg-gradient-to-r from-rose-400 to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity" />
           </Link>
         </motion.div>

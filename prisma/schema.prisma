@@ -47,6 +47,7 @@ model Product {
   reviews         Review[]
   orderItems      OrderItem[]
   cartItems       CartItem[]
+  collections     ProductCollection[]
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
 }
@@ -170,4 +171,28 @@ model ContentBlock {
   page      String   @default("home")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Collection {
+  id           String                @id @default(cuid())
+  name         String
+  nameAr       String
+  description  String?
+  descriptionAr String?
+  image        String?
+  isActive     Boolean               @default(true)
+  order        Int                   @default(0)
+  showOnHome   Boolean               @default(true)
+  products     ProductCollection[]
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+}
+
+model ProductCollection {
+  id           String     @id @default(cuid())
+  productId    String
+  collectionId String
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  @@unique([productId, collectionId])
 }
