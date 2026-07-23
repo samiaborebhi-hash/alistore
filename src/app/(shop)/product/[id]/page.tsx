@@ -108,9 +108,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               <QuantityBreaksWidget
                 breaks={quantityBreaks}
                 basePrice={product.price}
-                onApply={(qty, finalPrice, brk) => {
-                  // This will be handled by AddToCartButton's internal state
-                }}
+                productId={product.id}
+                productName={product.nameAr}
               />
             )}
 

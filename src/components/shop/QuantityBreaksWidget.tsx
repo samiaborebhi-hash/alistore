@@ -12,10 +12,11 @@ interface Break {
 interface Props {
   breaks: Break[]
   basePrice: number
-  onApply: (quantity: number, finalPrice: number, breakInfo: Break | null) => void
+  productId: string
+  productName: string
 }
 
-export function QuantityBreaksWidget({ breaks, basePrice, onApply }: Props) {
+export function QuantityBreaksWidget({ breaks, basePrice, productId, productName }: Props) {
   const [selected, setSelected] = useState<number | null>(null)
 
   // Sort breaks by quantity ascending
@@ -31,7 +32,10 @@ export function QuantityBreaksWidget({ breaks, basePrice, onApply }: Props) {
   function selectBreak(brk: Break, idx: number) {
     const finalPrice = getFinalPrice(brk)
     setSelected(idx)
-    onApply(brk.quantity, finalPrice, brk)
+    // Dispatch custom event for AddToCartButton to pick up
+    window.dispatchEvent(new CustomEvent('quantity-break-selected', {
+      detail: { productId, quantity: brk.quantity, finalPrice, breakInfo: brk }
+    }))
   }
 
   return (
