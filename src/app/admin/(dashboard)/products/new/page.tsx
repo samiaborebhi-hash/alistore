@@ -2,6 +2,7 @@ import { db } from '@/lib/db'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { ImageUploadWrapper } from '@/components/admin/ImageUploadWrapper'
+import { QuantityBreaksEditor } from '@/components/admin/QuantityBreaksEditor'
 
 export default async function NewProductPage() {
   const categories = await db.category.findMany()
@@ -30,6 +31,8 @@ export default async function NewProductPage() {
             isFeatured: formData.get('isFeatured') === 'on',
             tags: JSON.stringify((formData.get('tags') as string || '').split(',').map(t => t.trim()).filter(Boolean)),
             images: formData.get('images') as string || '[]',
+            enableQuantityBreaks: formData.get('enableQuantityBreaks') === 'true',
+            quantityBreaks: formData.get('quantityBreaks') as string || '[]',
           }
           await db.product.create({ data })
           revalidatePath('/admin/products')
@@ -62,6 +65,11 @@ export default async function NewProductPage() {
         <div className="card">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">الصور</h2>
           <ImageUploadWrapper />
+        </div>
+
+        <div className="card">
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">عروض الكميات والأسعار المتدرجة</h2>
+          <QuantityBreaksEditor />
         </div>
 
         <div className="card">

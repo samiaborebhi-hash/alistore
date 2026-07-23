@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache'
 import { ProductImageGallery } from '@/components/shop/ProductImageGallery'
 import { StarRating } from '@/components/ui/StarRating'
 import { AddToCartButton } from '@/components/shop/AddToCartButton'
+import { QuantityBreaksWidget } from '@/components/shop/QuantityBreaksWidget'
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -18,6 +19,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const images: string[] = JSON.parse(product.images || '[]')
   const phone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '966500000000'
   const tags: string[] = JSON.parse(product.tags || '[]')
+  const quantityBreaks: any[] = JSON.parse(product.quantityBreaks || '[]')
   const avgRating = product.reviews.length > 0
     ? product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length
     : 0
@@ -91,6 +93,16 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                   <span key={tag} className="px-3 py-1 bg-purple-50 text-purple-600 rounded-full text-sm border border-purple-100">{tag}</span>
                 ))}
               </div>
+            )}
+
+            {product.enableQuantityBreaks && quantityBreaks.length > 0 && (
+              <QuantityBreaksWidget
+                breaks={quantityBreaks}
+                basePrice={product.price}
+                onApply={(qty, finalPrice, brk) => {
+                  // This will be handled by AddToCartButton's internal state
+                }}
+              />
             )}
 
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
