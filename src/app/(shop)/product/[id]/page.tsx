@@ -19,7 +19,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const images: string[] = JSON.parse(product.images || '[]')
   const phone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '966500000000'
   const tags: string[] = JSON.parse(product.tags || '[]')
-  const quantityBreaks: any[] = JSON.parse(product.quantityBreaks || '[]')
+  const quantityBreaks = product.enableQuantityBreaks
+    ? (() => { try { return JSON.parse(product.quantityBreaks || '[]') } catch { return [] } })()
+    : []
   const avgRating = product.reviews.length > 0
     ? product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length
     : 0
