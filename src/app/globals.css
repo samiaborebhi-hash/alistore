@@ -58,15 +58,15 @@ body {
   z-index: 0;
 }
 
-/* Section with cosmetic gradient - semi-transparent to show background */
+/* Section with cosmetic gradient - more transparent to show background */
 .section-rose {
-  background: linear-gradient(135deg, rgba(255,241,242,0.6) 0%, rgba(253,242,248,0.6) 50%, rgba(250,245,255,0.6) 100%);
+  background: linear-gradient(135deg, rgba(255,241,242,0.3) 0%, rgba(253,242,248,0.3) 50%, rgba(250,245,255,0.3) 100%);
 }
 .section-purple {
-  background: linear-gradient(135deg, rgba(250,245,255,0.6) 0%, rgba(253,242,248,0.6) 50%, rgba(255,247,237,0.6) 100%);
+  background: linear-gradient(135deg, rgba(250,245,255,0.3) 0%, rgba(253,242,248,0.3) 50%, rgba(255,247,237,0.3) 100%);
 }
 .section-gold {
-  background: linear-gradient(135deg, rgba(255,247,237,0.6) 0%, rgba(253,242,248,0.6) 50%, rgba(255,241,242,0.6) 100%);
+  background: linear-gradient(135deg, rgba(255,247,237,0.3) 0%, rgba(253,242,248,0.3) 50%, rgba(255,241,242,0.3) 100%);
 }
 
 /* Glass card */
