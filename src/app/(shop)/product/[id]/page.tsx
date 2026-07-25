@@ -61,17 +61,18 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
   return (
     <div className="pt-20 md:pt-28 pb-16">
-      <div className="container mx-auto px-4">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
-          <Link href="/" className="hover:text-purple-600 transition-colors">الرئيسية</Link>
-          <span>/</span>
-          <Link href={`/${product.category.slug || '#'}`} className="hover:text-purple-600 transition-colors">{product.category.nameAr}</Link>
-          <span>/</span>
-          <span className="text-gray-700 line-clamp-1">{product.nameAr}</span>
-        </nav>
+      <div className="container mx-auto px-4 max-w-6xl">
+        <div className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl border border-purple-50 mb-12">
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-purple-600 transition-colors">الرئيسية</Link>
+            <span>/</span>
+            <Link href={`/products`} className="hover:text-purple-600 transition-colors">{product.category.nameAr}</Link>
+            <span>/</span>
+            <span className="text-gray-700 line-clamp-1 font-medium">{product.nameAr}</span>
+          </nav>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {/* Image Gallery */}
           <div className="md:sticky md:top-28 self-start">
             <ProductImageGallery images={images} name={product.nameAr} />
@@ -150,9 +151,10 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Reviews Section */}
-        <div className="mt-16 md:mt-24 max-w-4xl mx-auto">
+      {/* Reviews Section */}
+      <div className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl border border-purple-50 max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">التقييمات والمراجعات</h2>
             {product.reviews.length > 0 && (

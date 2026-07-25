@@ -16,11 +16,13 @@ export default async function ProductsPage() {
   return (
     <div className="pt-20 md:pt-28 pb-16 min-h-screen">
       <div className="container mx-auto px-4">
-        <div className="mb-6 md:mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">كل المنتجات</h1>
-          <p className="text-gray-500">تصفح مجموعتنا الكاملة من منتجات التجميل</p>
+        <div className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-10 shadow-xl border border-purple-50">
+          <div className="mb-6 md:mb-10 text-center md:text-right">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">كل المنتجات</h1>
+            <p className="text-gray-500">تصفح مجموعتنا الكاملة من منتجات التجميل والعناية النسائية</p>
+          </div>
+          <ProductsGrid products={JSON.parse(JSON.stringify(products))} categories={categories} />
         </div>
-        <ProductsGrid products={JSON.parse(JSON.stringify(products))} categories={categories} />
       </div>
     </div>
   )

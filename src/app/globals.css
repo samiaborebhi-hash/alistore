@@ -35,8 +35,8 @@ html {
 
 body {
   font-family: 'Cairo', sans-serif;
-  background: var(--background);
-  background-image: url('/nove-bg.png');
+  background-color: #fdf4f8;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('/nove-bg.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -52,29 +52,32 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.03;
+  opacity: 0.02;
   background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23933'%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Ccircle cx='50' cy='30' r='1.5'/%3E%3Ccircle cx='30' cy='70' r='2'/%3E%3Ccircle cx='70' cy='50' r='1.5'/%3E%3Ccircle cx='40' cy='10' r='1'/%3E%3Ccircle cx='70' cy='20' r='2.5'/%3E%3Ccircle cx='10' cy='50' r='1'/%3E%3Ccircle cx='60' cy='70' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
 }
 
-/* Section with cosmetic gradient - very transparent to show background */
+/* Section with solid high-contrast background - hides background image under content */
 .section-rose {
-  background: linear-gradient(135deg, rgba(255,241,242,0.1) 0%, rgba(253,242,248,0.1) 50%, rgba(250,245,255,0.1) 100%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
 }
 .section-purple {
-  background: linear-gradient(135deg, rgba(250,245,255,0.1) 0%, rgba(253,242,248,0.1) 50%, rgba(255,247,237,0.1) 100%);
+  background: rgba(252, 248, 255, 0.95);
+  backdrop-filter: blur(16px);
 }
 .section-gold {
-  background: linear-gradient(135deg, rgba(255,247,237,0.1) 0%, rgba(253,242,248,0.1) 50%, rgba(255,241,242,0.1) 100%);
+  background: rgba(255, 253, 248, 0.95);
+  backdrop-filter: blur(16px);
 }
 
 /* Glass card */
 .glass-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(243, 232, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(147, 51, 234, 0.06);
 }
 
 /* Gradient text */
