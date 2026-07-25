@@ -96,7 +96,7 @@ export function CinematicHero({ badge, title, titleHighlight, subtitle, btnMen, 
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-base sm:text-lg md:text-xl text-gray-500 mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-2"
         >
-          {subtitle || 'وجهتك الأولى لمنتجات التجميل الرجالية والنسائية. نوفر أفضل الماركات العالمية بأسعار تنافسية للجملة والتجزئة'}
+          {subtitle || 'وجهتك الأولى لأرقى منتجات التجميل والعناية النسائية. نوفر أفضل الماركات العالمية بأسعار تنافسية للجملة والتجزئة'}
         </motion.p>
 
         <motion.div

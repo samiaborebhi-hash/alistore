@@ -38,12 +38,12 @@ export default async function HomePage() {
   return (
     <>
       <CinematicHero
-        badge={c('hero_badge', 'منتجات أصلية 100% - جملة وتجزئة')}
-        title={c('hero_title', 'متجر')}
-        titleHighlight={c('hero_title_highlight', 'التجميل')}
-        subtitle={c('hero_subtitle', 'وجهتك الأولى لمنتجات التجميل الرجالية والنسائية. نوفر أفضل الماركات العالمية بأسعار تنافسية للجملة والتجزئة')}
-        btnMen={c('hero_btn_men', 'تسوق رجالي')}
-        btnWomen={c('hero_btn_women', 'تسوق نسائي')}
+        badge={c('hero_badge', 'منتجات تجميل نسائية أصلية 100%')}
+        title={c('hero_title', 'نوفا بيور')}
+        titleHighlight={c('hero_title_highlight', 'للتجميل')}
+        subtitle={c('hero_subtitle', 'وجهتك الأولى لأرقى منتجات التجميل والعناية النسائية. نوفر أفضل الماركات العالمية بأسعار تنافسية للجملة والتجزئة')}
+        btnMen={c('hero_btn_men', 'تصفح المنتجات')}
+        btnWomen={c('hero_btn_women', 'عروض الجملة')}
       />
 
       <PromotionalBanner

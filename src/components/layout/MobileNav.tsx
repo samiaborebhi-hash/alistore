@@ -33,9 +33,10 @@ export function MobileNav({ siteName = 'القائمة', menuItems }: MobileNavP
     ? menuItems
     : [
         { id: 'home', label: 'الرئيسية', url: '/' },
-        { id: 'men', label: 'رجالي', url: '/men' },
-        { id: 'women', label: 'نسائي', url: '/women' },
-        { id: 'wholesale', label: 'جملة', url: '/wholesale' },
+        { id: 'products', label: 'كل المنتجات', url: '/products' },
+        { id: 'makeup', label: 'مكياج وتجميل', url: '/products?category=makeup' },
+        { id: 'skincare', label: 'عناية بالشعر والبشرة', url: '/products?category=skincare' },
+        { id: 'wholesale', label: 'عروض الجملة', url: '/wholesale' },
       ]
 
   return (

@@ -17,9 +17,9 @@ export async function Footer() {
     ? footerMenu
     : [
         { id: 'home', label: 'الرئيسية', url: '/', position: 'footer', order: 0 },
-        { id: 'men', label: 'منتجات رجالية', url: '/men', position: 'footer', order: 1 },
-        { id: 'women', label: 'منتجات نسائية', url: '/women', position: 'footer', order: 2 },
-        { id: 'wholesale', label: 'البيع بالجملة', url: '/wholesale', position: 'footer', order: 3 },
+        { id: 'products', label: 'كل المنتجات', url: '/products', position: 'footer', order: 1 },
+        { id: 'wholesale', label: 'البيع بالجملة', url: '/wholesale', position: 'footer', order: 2 },
+        { id: 'wishlist', label: 'المفضلة', url: '/wishlist', position: 'footer', order: 3 },
       ]
 
   return (
@@ -45,7 +45,7 @@ export async function Footer() {
               </h3>
             </Link>
             <p className="text-gray-400 leading-relaxed mb-6">
-              {settings.aboutTextAr || 'منتجات تجميل أصلية رجالية ونسائية - جملة وتجزئة بأسعار مميزة وتوصيل سريع.'}
+              {settings.aboutTextAr || 'أرقى منتجات التجميل والعناية النسائية - جملة وتجزئة بأسعار مميزة وتوصيل سريع.'}
             </p>
             <div className="flex items-center gap-3">
               <a

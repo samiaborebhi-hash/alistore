@@ -5,6 +5,7 @@ import { db } from './db'
 import { LoginSchema } from './validations'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: process.env.AUTH_SECRET || 'aaAA1232!@!#ASD',
   pages: { signIn: '/admin/login', error: '/admin/login' },
   session: { strategy: 'jwt' },
   providers: [
@@ -17,7 +18,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const parsed = LoginSchema.safeParse(credentials)
         if (!parsed.success) return null
         const { email, password } = parsed.data
-        const user = await db.user.findUnique({ where: { email } })
+        const cleanEmail = email.toLowerCase().trim()
+        const user = await db.user.findFirst({
+          where: {
+            email: { equals: cleanEmail, mode: 'insensitive' }
+          }
+        })
         if (!user) return null
         const isValid = await compare(password, user.passwordHash)
         if (!isValid) return null
