@@ -8,6 +8,7 @@ import { formatPrice } from '@/lib/utils'
 import { ShoppingCart, Heart, Eye } from 'lucide-react'
 import { StarRating } from '@/components/ui/StarRating'
 import { useCart } from './CartContext'
+import { useWishlist } from './WishlistContext'
 
 interface Product {
   id: string; nameAr: string; price: number; wholesalePrice?: number | null
@@ -25,7 +26,8 @@ export function CinematicProductCard({
   index: number
   discountPercent?: number
 }) {
-  const [isLiked, setIsLiked] = useState(false)
+  const { toggleItem, isInWishlist } = useWishlist()
+  const isLiked = isInWishlist(product.id)
   const { addItem } = useCart()
   const images = JSON.parse(product.images || '[]')
   const avgRating = product.reviews && product.reviews.length > 0
@@ -87,7 +89,16 @@ export function CinematicProductCard({
         <div className="absolute right-3 top-1/2 -translate-y-1/2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300 z-20">
           <button
             type="button"
-            onClick={(e) => { e.stopPropagation(); setIsLiked(!isLiked) }}
+            onClick={(e) => { 
+              e.stopPropagation(); 
+              toggleItem({
+                id: product.id,
+                nameAr: product.nameAr,
+                price: finalPrice,
+                image: images[0] || '',
+                category: product.category.nameAr
+              })
+            }}
             className={`w-9 h-9 rounded-full flex items-center justify-center shadow-lg transition-colors ${isLiked ? 'bg-rose-500 text-white' : 'bg-white text-gray-600 hover:text-rose-500'}`}
             aria-label="المفضلة"
           >

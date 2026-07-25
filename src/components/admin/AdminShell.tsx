@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Package, ShoppingBag, Settings, LogOut, Store, ChevronLeft, Tag, Menu, FileText, UserCog, X, PenSquare, Layers } from 'lucide-react'
+import { LayoutDashboard, Package, ShoppingBag, Settings, LogOut, Store, ChevronLeft, Tag, Menu, FileText, UserCog, X, PenSquare, Layers, BarChart3 } from 'lucide-react'
 
 const navItems = [
   { href: '/admin', label: 'الرئيسية', icon: LayoutDashboard, color: 'text-purple-600', bg: 'bg-purple-50' },
+  { href: '/admin/analytics', label: 'التقارير', icon: BarChart3, color: 'text-emerald-600', bg: 'bg-emerald-50' },
   { href: '/admin/products', label: 'المنتجات', icon: Package, color: 'text-blue-600', bg: 'bg-blue-50' },
   { href: '/admin/collections', label: 'الكولكشنز', icon: Layers, color: 'text-pink-600', bg: 'bg-pink-50' },
   { href: '/admin/orders', label: 'الطلبات', icon: ShoppingBag, color: 'text-green-600', bg: 'bg-green-50' },

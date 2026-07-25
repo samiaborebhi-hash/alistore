@@ -1,6 +1,6 @@
 import { db } from '@/lib/db'
 import { revalidatePath } from 'next/cache'
-import { Phone, User, Calendar, Tag, Package } from 'lucide-react'
+import { Phone, User, Calendar, Tag, Package, Download } from 'lucide-react'
 
 export default async function AdminOrders() {
   const orders = await db.order.findMany({
@@ -29,9 +29,19 @@ export default async function AdminOrders() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-800">الطلبات</h1>
-        <p className="text-gray-500 mt-1">إدارة ومتابعة جميع طلبات المتجر</p>
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">الطلبات</h1>
+          <p className="text-gray-500 mt-1">إدارة ومتابعة جميع طلبات المتجر</p>
+        </div>
+        <a
+          href="/api/orders/export"
+          download
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-semibold transition-colors shadow-sm"
+        >
+          <Download size={16} />
+          تصدير CSV
+        </a>
       </div>
 
       {/* Stats */}

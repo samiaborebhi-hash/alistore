@@ -22,44 +22,44 @@ model Category {
   name      String    @unique
   nameAr    String
   slug      String    @unique
-  products  Product[]
   createdAt DateTime  @default(now())
+  products  Product[]
 }
 
 model Product {
-  id              String      @id @default(cuid())
-  name            String
-  nameAr          String
-  description     String?
-  descriptionAr   String?
-  price           Float
-  wholesalePrice  Float?
-  minWholesaleQty Int         @default(10)
-  stock           Int         @default(0)
-  images          String      @default("[]")
-  categoryId      String
-  category        Category    @relation(fields: [categoryId], references: [id])
-  isActive        Boolean     @default(true)
-  isFeatured      Boolean     @default(false)
-  tags            String      @default("[]")
-  enableQuantityBreaks Boolean @default(false)
-  quantityBreaks  String      @default("[]")
-  reviews         Review[]
-  orderItems      OrderItem[]
-  cartItems       CartItem[]
-  collections     ProductCollection[]
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  id                   String              @id @default(cuid())
+  name                 String
+  nameAr               String
+  description          String?
+  descriptionAr        String?
+  price                Float
+  wholesalePrice       Float?
+  minWholesaleQty      Int                 @default(10)
+  stock                Int                 @default(0)
+  images               String              @default("[]")
+  categoryId           String
+  isActive             Boolean             @default(true)
+  isFeatured           Boolean             @default(false)
+  tags                 String              @default("[]")
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+  enableQuantityBreaks Boolean             @default(false)
+  quantityBreaks       String              @default("[]")
+  cartItems            CartItem[]
+  orderItems           OrderItem[]
+  category             Category            @relation(fields: [categoryId], references: [id])
+  collections          ProductCollection[]
+  reviews              Review[]
 }
 
 model Review {
   id        String   @id @default(cuid())
   productId String
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   name      String
   rating    Int
   comment   String
   createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Order {
@@ -71,21 +71,21 @@ model Order {
   status        String      @default("pending")
   totalAmount   Float
   notes         String?
-  items         OrderItem[]
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+  items         OrderItem[]
 }
 
 model OrderItem {
-  id              String  @id @default(cuid())
-  orderId         String
-  order           Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId       String
-  product         Product @relation(fields: [productId], references: [id])
-  quantity        Int
-  price           Float
-  originalPrice   Float   @default(0)
-  appliedBreak    String?
+  id            String  @id @default(cuid())
+  orderId       String
+  productId     String
+  quantity      Int
+  price         Float
+  appliedBreak  String?
+  originalPrice Float   @default(0)
+  order         Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product       Product @relation(fields: [productId], references: [id])
 }
 
 model SiteSettings {
@@ -106,12 +106,12 @@ model SiteSettings {
 }
 
 model MenuItem {
-  id       String @id @default(cuid())
+  id       String  @id @default(cuid())
   label    String
   labelAr  String?
   url      String
-  position String @default("header")
-  order    Int    @default(0)
+  position String  @default("header")
+  order    Int     @default(0)
 }
 
 model Promotion {
@@ -130,19 +130,19 @@ model Promotion {
 model Cart {
   id        String     @id @default(cuid())
   sessionId String?    @unique
-  items     CartItem[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  items     CartItem[]
 }
 
 model CartItem {
   id        String  @id @default(cuid())
   cartId    String
-  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
   productId String
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity  Int     @default(1)
   price     Float   @default(0)
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@unique([cartId, productId])
 }
@@ -174,25 +174,26 @@ model ContentBlock {
 }
 
 model Collection {
-  id           String                @id @default(cuid())
-  name         String
-  nameAr       String
-  description  String?
+  id            String              @id @default(cuid())
+  name          String
+  nameAr        String
+  description   String?
   descriptionAr String?
-  image        String?
-  isActive     Boolean               @default(true)
-  order        Int                   @default(0)
-  showOnHome   Boolean               @default(true)
-  products     ProductCollection[]
-  createdAt    DateTime              @default(now())
-  updatedAt    DateTime              @updatedAt
+  image         String?
+  isActive      Boolean             @default(true)
+  order         Int                 @default(0)
+  showOnHome    Boolean             @default(true)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  products      ProductCollection[]
 }
 
 model ProductCollection {
   id           String     @id @default(cuid())
   productId    String
   collectionId String
-  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
   collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+
   @@unique([productId, collectionId])
 }

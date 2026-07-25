@@ -25,6 +25,7 @@ export default async function AdminSettings() {
             instagramUrl: (formData.get('instagramUrl') as string) || null,
             logoUrl: (formData.get('logoUrl') as string) || null,
             aboutTextAr: (formData.get('aboutTextAr') as string) || null,
+            currency: (formData.get('currency') as string) || 'ILS',
           },
           create: {
             id: 'main',
@@ -36,6 +37,7 @@ export default async function AdminSettings() {
             instagramUrl: (formData.get('instagramUrl') as string) || null,
             logoUrl: (formData.get('logoUrl') as string) || null,
             aboutTextAr: (formData.get('aboutTextAr') as string) || null,
+            currency: (formData.get('currency') as string) || 'ILS',
           },
         })
         revalidateTag('site-settings')
@@ -58,6 +60,18 @@ export default async function AdminSettings() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">اسم المتجر (إنجليزي)</label>
               <input name="siteNameEn" defaultValue={settings?.siteNameEn || 'Beauty Store'} required className="input-field" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">العملة الرئيسية</label>
+              <select name="currency" defaultValue={settings?.currency || 'ILS'} className="input-field">
+                <option value="ILS">شيكل (₪)</option>
+                <option value="SAR">ريال سعودي (ر.س)</option>
+                <option value="USD">دولار أمريكي ($)</option>
+                <option value="EUR">يورو (€)</option>
+                <option value="AED">درهم إماراتي (د.إ)</option>
+                <option value="EGP">جنيه مصري (ج.م)</option>
+                <option value="JOD">دينار أردني (د.أ)</option>
+              </select>
             </div>
           </div>
           <div className="mt-4">

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { db } from '@/lib/db'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -7,6 +8,28 @@ import { ProductImageGallery } from '@/components/shop/ProductImageGallery'
 import { StarRating } from '@/components/ui/StarRating'
 import { AddToCartButton } from '@/components/shop/AddToCartButton'
 import { QuantityBreaksWidget } from '@/components/shop/QuantityBreaksWidget'
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params
+  const product = await db.product.findUnique({
+    where: { id },
+    select: { nameAr: true, descriptionAr: true, images: true, price: true },
+  })
+  if (!product) return { title: 'المنتج غير موجود' }
+  const images: string[] = JSON.parse(product.images || '[]')
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://novapure.beauty'
+  return {
+    title: product.nameAr,
+    description: product.descriptionAr || `${product.nameAr} - متوفر بسعر ${product.price} ر.س`,
+    openGraph: {
+      title: `${product.nameAr} | نوفا بيور`,
+      description: product.descriptionAr || `${product.nameAr} بسعر ${product.price} ر.س`,
+      images: images[0] ? [{ url: images[0], alt: product.nameAr }] : [],
+      url: `${baseUrl}/product/${id}`,
+      type: 'website',
+    },
+  }
+}
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
