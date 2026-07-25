@@ -47,7 +47,7 @@ export const getSiteSettings = unstable_cache(
     )
   },
   ['site-settings'],
-  { revalidate: 3600, tags: ['site-settings'] }
+  { revalidate: 0, tags: ['site-settings'] }
 )
 
 export const getMenuItems = unstable_cache(
@@ -64,7 +64,7 @@ export const getMenuItems = unstable_cache(
     )
   },
   ['menu-items'],
-  { revalidate: 60, tags: ['menu-items'] }
+  { revalidate: 0, tags: ['menu-items'] }
 )
 
 export const getActivePromotions = unstable_cache(
@@ -84,7 +84,7 @@ export const getActivePromotions = unstable_cache(
     )
   },
   ['active-promotions'],
-  { revalidate: 60, tags: ['promotions'] }
+  { revalidate: 0, tags: ['promotions'] }
 )
 
 export function getDiscountPercent(promotions: { productIds: string; discountPercent: number }[], productId: string) {
@@ -117,7 +117,7 @@ export const getPages = unstable_cache(
     )
   },
   ['pages'],
-  { revalidate: 3600, tags: ['pages'] }
+  { revalidate: 0, tags: ['pages'] }
 )
 
 export const getPageBySlug = unstable_cache(
@@ -130,5 +130,5 @@ export const getPageBySlug = unstable_cache(
     )
   },
   ['page-by-slug'],
-  { revalidate: 3600, tags: ['pages'] }
+  { revalidate: 0, tags: ['pages'] }
 )

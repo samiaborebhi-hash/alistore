@@ -20,10 +20,10 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://novapure.beauty'
   return {
     title: product.nameAr,
-    description: product.descriptionAr || `${product.nameAr} - متوفر بسعر ${product.price} ر.س`,
+    description: product.descriptionAr || `${product.nameAr} - متوفر بسعر ${product.price} ₪`,
     openGraph: {
       title: `${product.nameAr} | نوفا بيور`,
-      description: product.descriptionAr || `${product.nameAr} بسعر ${product.price} ر.س`,
+      description: product.descriptionAr || `${product.nameAr} بسعر ${product.price} ₪`,
       images: images[0] ? [{ url: images[0], alt: product.nameAr }] : [],
       url: `${baseUrl}/product/${id}`,
       type: 'website',

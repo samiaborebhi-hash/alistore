@@ -190,7 +190,7 @@ export function ProductsGrid({ products, categories }: Props) {
                   <span className="text-xs text-purple-500 font-medium">{p.category.nameAr}</span>
                   <h3 className="font-bold text-sm text-gray-800 line-clamp-2 mt-1">{p.nameAr}</h3>
                   <div className="flex items-center justify-between mt-2">
-                    <span className="text-lg font-bold text-purple-600">{p.price} <span className="text-xs">ر.س</span></span>
+                    <span className="text-lg font-bold text-purple-600">{p.price} <span className="text-xs">₪</span></span>
                     {p.wholesalePrice && p.wholesalePrice < p.price && (
                       <span className="text-xs text-green-600 font-medium">جملة</span>
                     )}

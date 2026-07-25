@@ -52,7 +52,7 @@ export default async function NewProductPage() {
         <div className="card">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">التسعير والمخزون</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div><label className="block text-sm font-medium text-gray-700 mb-2">السعر (ر.س)</label><input name="price" type="number" step="0.01" required className="input-field" /></div>
+            <div><label className="block text-sm font-medium text-gray-700 mb-2">السعر (₪)</label><input name="price" type="number" step="0.01" required className="input-field" /></div>
             <div><label className="block text-sm font-medium text-gray-700 mb-2">سعر الجملة (اختياري)</label><input name="wholesalePrice" type="number" step="0.01" className="input-field" /></div>
             <div><label className="block text-sm font-medium text-gray-700 mb-2">الحد الأدنى للجملة</label><input name="minWholesaleQty" type="number" defaultValue={10} className="input-field" /></div>
           </div>

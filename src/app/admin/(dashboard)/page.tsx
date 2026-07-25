@@ -30,7 +30,7 @@ export default async function AdminDashboard() {
   const stats = [
     { label: 'إجمالي المنتجات', value: productCount, icon: Package, bg: 'bg-gradient-to-br from-purple-50 to-purple-100', text: 'text-purple-600', border: 'border-purple-100', change: '+12%', up: true },
     { label: 'إجمالي الطلبات', value: orderCount, icon: ShoppingBag, bg: 'bg-gradient-to-br from-blue-50 to-blue-100', text: 'text-blue-600', border: 'border-blue-100', change: '+8%', up: true },
-    { label: 'إجمالي المبيعات', value: `${totalRevenue.toLocaleString()} ر.س`, icon: DollarSign, bg: 'bg-gradient-to-br from-green-50 to-green-100', text: 'text-green-600', border: 'border-green-100', change: '+15%', up: true },
+    { label: 'إجمالي المبيعات', value: `${totalRevenue.toLocaleString()} ₪`, icon: DollarSign, bg: 'bg-gradient-to-br from-green-50 to-green-100', text: 'text-green-600', border: 'border-green-100', change: '+15%', up: true },
     { label: 'طلبات معلقة', value: pendingOrders, icon: Clock, bg: 'bg-gradient-to-br from-orange-50 to-orange-100', text: 'text-orange-600', border: 'border-orange-100', change: '-3%', up: false },
   ]
 
@@ -156,7 +156,7 @@ export default async function AdminDashboard() {
                     <td className="py-4 px-4 text-gray-600 text-xs max-w-[200px] truncate">
                       {order.items.map(i => i.product.nameAr).join('، ')}
                     </td>
-                    <td className="py-4 px-4 font-bold text-gray-800 whitespace-nowrap">{order.totalAmount.toLocaleString()} ر.س</td>
+                    <td className="py-4 px-4 font-bold text-gray-800 whitespace-nowrap">{order.totalAmount.toLocaleString()} ₪</td>
                     <td className="py-4 px-4 whitespace-nowrap">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium border ${statusColors[order.status]}`}>
                         {statusLabels[order.status]}

@@ -88,7 +88,7 @@ export default async function AdminOrders() {
                       <div key={item.id} className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-1.5 text-sm">
                         <span className="font-medium text-gray-700">{item.product.nameAr}</span>
                         <span className="text-gray-400">×{item.quantity}</span>
-                        <span className="text-gray-500">({item.price} ر.س)</span>
+                        <span className="text-gray-500">({item.price} ₪)</span>
                       </div>
                     ))}
                   </div>
@@ -97,7 +97,7 @@ export default async function AdminOrders() {
                 </div>
 
                 <div className="flex items-center gap-3 lg:flex-shrink-0">
-                  <span className="text-xl font-bold text-gray-800">{order.totalAmount.toLocaleString()} ر.س</span>
+                  <span className="text-xl font-bold text-gray-800">{order.totalAmount.toLocaleString()} ₪</span>
                   <form action={async (formData: FormData) => { 'use server'; await db.order.update({ where: { id: formData.get('id') as string }, data: { status: formData.get('status') as string } }); revalidatePath('/admin/orders') }} className="flex items-center gap-2">
                     <input type="hidden" name="id" value={order.id} />
                     <select name="status" defaultValue={order.status} className="input-field !py-2 !text-sm w-auto">

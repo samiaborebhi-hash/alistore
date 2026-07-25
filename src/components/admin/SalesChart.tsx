@@ -38,7 +38,7 @@ export function SalesChart({ orders }: { orders: Order[] }) {
       <div className="flex items-center justify-between mb-5">
         <h3 className="font-semibold text-gray-700 text-lg flex items-center gap-2">
           <BarChart3 size={20} className="text-purple-500" />
-          المبيعات الشهرية (ر.س)
+          المبيعات الشهرية (₪)
         </h3>
       </div>
       {barData.length === 0 ? (
@@ -52,7 +52,7 @@ export function SalesChart({ orders }: { orders: Order[] }) {
               <YAxis tick={{ fontSize: 11, fill: '#94a3b8' }} />
               <Tooltip
                 contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
-                formatter={(value: any) => [`${Number(value).toLocaleString()} ر.س`, '']}
+                formatter={(value: any) => [`${Number(value).toLocaleString()} ₪`, '']}
               />
               <Bar dataKey="retail" name="تجزئة" fill="#a855f7" radius={[6, 6, 0, 0]} />
               <Bar dataKey="wholesale" name="جملة" fill="#f43f5e" radius={[6, 6, 0, 0]} />
@@ -68,7 +68,7 @@ export function SalesChart({ orders }: { orders: Order[] }) {
                   ))}
                 </Pie>
                 <Legend formatter={(value) => <span className="text-sm text-gray-600">{value}</span>} />
-                <Tooltip formatter={(value: any) => [`${Number(value).toLocaleString()} ر.س`, '']} />
+                <Tooltip formatter={(value: any) => [`${Number(value).toLocaleString()} ₪`, '']} />
               </PieChart>
             </ResponsiveContainer>
           </div>

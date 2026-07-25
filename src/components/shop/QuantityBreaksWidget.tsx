@@ -70,14 +70,14 @@ export function QuantityBreaksWidget({ breaks, basePrice, productId, productName
               <div className="text-center">
                 <p className="text-lg font-bold text-gray-800">{brk.quantity} قطعة</p>
                 <p className="text-xl font-bold text-purple-600 mt-1">
-                  {finalPrice} <span className="text-sm font-normal">ر.س</span>
+                  {finalPrice} <span className="text-sm font-normal">₪</span>
                 </p>
                 <p className="text-xs text-gray-400 line-through mt-0.5">
-                  {(basePrice * brk.quantity).toFixed(2)} ر.س
+                  {(basePrice * brk.quantity).toFixed(2)} ₪
                 </p>
                 {savings > 0 && (
                   <p className="text-xs text-green-600 font-medium mt-1">
-                    وفّر {savings.toFixed(2)} ر.س
+                    وفّر {savings.toFixed(2)} ₪
                   </p>
                 )}
               </div>

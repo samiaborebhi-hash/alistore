@@ -91,8 +91,8 @@ export default async function AdminProducts({ searchParams }: { searchParams: Pr
                   <td className="py-3 px-4">
                     <span className="px-2 py-0.5 bg-purple-50 text-purple-600 rounded-full text-xs font-medium">{p.category.nameAr}</span>
                   </td>
-                  <td className="py-3 px-4 font-semibold text-gray-800">{p.price.toLocaleString()} ر.س</td>
-                  <td className="py-3 px-4 text-gray-600">{p.wholesalePrice ? `${p.wholesalePrice.toLocaleString()} ر.س` : '-'}</td>
+                  <td className="py-3 px-4 font-semibold text-gray-800">{p.price.toLocaleString()} ₪</td>
+                  <td className="py-3 px-4 text-gray-600">{p.wholesalePrice ? `${p.wholesalePrice.toLocaleString()} ₪` : '-'}</td>
                   <td className="py-3 px-4">
                     <span className={`font-medium ${p.stock === 0 ? 'text-red-500' : p.stock < 10 ? 'text-orange-500' : 'text-green-600'}`}>
                       {p.stock}

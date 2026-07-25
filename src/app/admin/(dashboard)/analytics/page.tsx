@@ -55,9 +55,9 @@ export default async function AnalyticsPage() {
 
   const stats = [
     {
-      label: 'إجمالي الإيرادات', value: `${totalRevenue.toLocaleString()} ر.س`,
+      label: 'إجمالي الإيرادات', value: `${totalRevenue.toLocaleString()} ₪`,
       icon: DollarSign, color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100',
-      sub: `${deliveredRevenue.toLocaleString()} ر.س محصّل`,
+      sub: `${deliveredRevenue.toLocaleString()} ₪ محصّل`,
     },
     {
       label: 'العملاء الفريدون', value: uniqueCustomers,
@@ -65,7 +65,7 @@ export default async function AnalyticsPage() {
       sub: `${allOrders.length} طلب إجمالي`,
     },
     {
-      label: 'متوسط قيمة الطلب', value: `${Math.round(avgOrderValue).toLocaleString()} ر.س`,
+      label: 'متوسط قيمة الطلب', value: `${Math.round(avgOrderValue).toLocaleString()} ₪`,
       icon: TrendingUp, color: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-100',
       sub: `${weekGrowth >= 0 ? '+' : ''}${weekGrowth}% هذا الأسبوع`,
     },
@@ -186,7 +186,7 @@ export default async function AnalyticsPage() {
                         {p.totalQty} قطعة
                       </span>
                     </td>
-                    <td className="py-3 px-4 font-bold text-green-600">{p.totalRevenue.toLocaleString()} ر.س</td>
+                    <td className="py-3 px-4 font-bold text-green-600">{p.totalRevenue.toLocaleString()} ₪</td>
                     <td className="py-3 px-4">
                       <span className={`px-2 py-1 rounded-lg text-xs font-medium ${p.stock > 10 ? 'bg-green-50 text-green-700' : p.stock > 0 ? 'bg-yellow-50 text-yellow-700' : 'bg-red-50 text-red-600'}`}>
                         {p.stock > 0 ? `${p.stock} متبقي` : 'نفد'}

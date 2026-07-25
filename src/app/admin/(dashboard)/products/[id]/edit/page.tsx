@@ -42,7 +42,7 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
         </div>
         <div><label className="block text-sm font-medium mb-1">الوصف (عربي)</label><textarea name="descriptionAr" defaultValue={product.descriptionAr || ''} rows={3} className="w-full px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-purple-500" /></div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div><label className="block text-sm font-medium mb-1">السعر (ر.س)</label><input name="price" type="number" step="0.01" defaultValue={product.price} required className="w-full px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-purple-500" /></div>
+          <div><label className="block text-sm font-medium mb-1">السعر (₪)</label><input name="price" type="number" step="0.01" defaultValue={product.price} required className="w-full px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-purple-500" /></div>
           <div><label className="block text-sm font-medium mb-1">سعر الجملة</label><input name="wholesalePrice" type="number" step="0.01" defaultValue={product.wholesalePrice || ''} className="w-full px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-purple-500" /></div>
           <div><label className="block text-sm font-medium mb-1">الحد الأدنى للجملة</label><input name="minWholesaleQty" type="number" defaultValue={product.minWholesaleQty || 10} className="w-full px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-purple-500" /></div>
         </div>

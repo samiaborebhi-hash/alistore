@@ -6,10 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatPrice(price: number): string {
-  return new Intl.NumberFormat('ar-SA', {
-    style: 'currency',
-    currency: 'SAR',
-  }).format(price)
+  return `${price.toLocaleString()} ₪`
 }
 
 export function whatsappLink(phone: string, message: string): string {
@@ -29,7 +26,7 @@ export interface OrderDetails {
 export function generateWhatsAppOrderMessage(order: OrderDetails): string {
   const typeLabel = order.type === 'wholesale' ? 'جملة' : 'تجزئة'
   const itemsList = order.items
-    .map((item, i) => `${i + 1}. ${item.name} ×${item.quantity} (${item.price} ر.س) = ${item.price * item.quantity} ر.س`)
+    .map((item, i) => `${i + 1}. ${item.name} ×${item.quantity} (${item.price} ₪) = ${item.price * item.quantity} ₪`)
     .join('\n')
 
   return `🛍️ *طلب جديد - ${typeLabel}*
@@ -40,7 +37,7 @@ export function generateWhatsAppOrderMessage(order: OrderDetails): string {
 📦 *المنتجات:*
 ${itemsList}
 
-💰 *الإجمالي:* ${order.totalAmount.toLocaleString()} ر.س
+💰 *الإجمالي:* ${order.totalAmount.toLocaleString()} ₪
 ${order.notes ? `\n📝 *ملاحظات:* ${order.notes}` : ''}
 
 ---
@@ -52,7 +49,7 @@ export function generateWhatsAppProductInquiry(productName: string, price: numbe
 
 أرغب في الاستفسار عن:
 🛍️ *${productName}*
-💰 السعر: ${price} ر.س${wholesalePrice ? `\n📦 سعر الجملة: ${wholesalePrice} ر.س` : ''}
+💰 السعر: ${price} ₪${wholesalePrice ? `\n📦 سعر الجملة: ${wholesalePrice} ₪` : ''}
 
 هل يمكنكم تزويدي بمزيد من التفاصيل؟`
 }
