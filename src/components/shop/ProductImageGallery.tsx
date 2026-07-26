@@ -41,6 +41,12 @@ export function ProductImageGallery({ images, name }: { images: string[]; name: 
               alt={`${name} - صورة ${activeIndex + 1}`}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (target && !target.src.includes('00ef1b63')) {
+                  target.src = '/uploads/00ef1b63-eb31-4aba-a1bf-e5d84249545e.jpg';
+                }
+              }}
               className={`object-cover transition-transform duration-500 ${zoomed ? 'scale-150' : 'group-hover:scale-105'}`}
             />
           </motion.div>
@@ -97,6 +103,12 @@ export function ProductImageGallery({ images, name }: { images: string[]; name: 
                 alt={`${name} - مصغرة ${i + 1}`}
                 fill
                 sizes="80px"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (target && !target.src.includes('00ef1b63')) {
+                    target.src = '/uploads/00ef1b63-eb31-4aba-a1bf-e5d84249545e.jpg';
+                  }
+                }}
                 className="object-cover"
               />
             </button>
