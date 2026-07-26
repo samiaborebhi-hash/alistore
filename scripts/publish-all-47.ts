@@ -16,7 +16,6 @@ async function publishAll47Live() {
     } catch {
       imgs = [p.images as string]
     }
-    if (!imgs.length && p.image) imgs = [p.image]
     if (!imgs.length) imgs = ['/uploads/loose-eyeshadow-edited.jpg']
 
     let fullImgUrl = imgs[0]

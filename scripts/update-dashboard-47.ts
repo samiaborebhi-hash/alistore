@@ -12,7 +12,6 @@ async function updateDashboardWithAll47() {
     } catch {
       imgs = [p.images as string]
     }
-    if (!imgs.length && p.image) imgs = [p.image]
     if (!imgs.length) imgs = ['/uploads/loose-eyeshadow-edited.jpg']
 
     return {
@@ -51,13 +50,14 @@ async function updateDashboardWithAll47() {
   })
 
   const htmlPath = './public/instagram-dashboard.html'
-  let htmlContent = fs.readFileSync(htmlPath, 'utf8')
-
-  const dbRegex = /const PRODUCTS_DB = \[[\s\S]*?\];/
-  const newDbStr = 'const PRODUCTS_DB = ' + JSON.stringify(formattedProducts, null, 2) + ';'
-  htmlContent = htmlContent.replace(dbRegex, newDbStr)
-
-  fs.writeFileSync(htmlPath, htmlContent, 'utf8')
-  console.log('Successfully updated instagram-dashboard.html with all 47 products!')
+  if (fs.existsSync(htmlPath)) {
+    let htmlContent = fs.readFileSync(htmlPath, 'utf8')
+    const dbRegex = /const PRODUCTS_DB = \[[\s\S]*?\];/
+    const newDbStr = 'const PRODUCTS_DB = ' + JSON.stringify(formattedProducts, null, 2) + ';'
+    htmlContent = htmlContent.replace(dbRegex, newDbStr)
+    fs.writeFileSync(htmlPath, htmlContent, 'utf8')
+    console.log('Successfully updated instagram-dashboard.html with all 47 products!')
+  }
 }
+
 updateDashboardWithAll47()
