@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة إعداد وتسويق المحتوى - Social Marketing Hub</title>
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & THEME CONFIGURATION
+       ========================================================================== */
+    :root {
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #8b5cf6;
+      --primary-hover: #7c3aed;
+      --primary-glow: rgba(139, 92, 246, 0.3);
+      --accent-pink: #ec4899;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --border-radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family);
+    }
+
+    body {
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 24px 16px;
+      direction: rtl;
+      line-height: 1.6;
+    }
+
+    /* Container & Layout */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-col: column;
+      gap: 24px;
+    }
+
+    /* Header Bar */
+    header {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--border-radius);
+      padding: 20px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary), var(--accent-pink));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 0 20px var(--primary-glow);
+    }
+
+    .brand-title h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      background: linear-gradient(to left, #ffffff, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-title p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Section Component */
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-right: 4px;
+      border-right: 4px solid var(--primary);
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      border-color: rgba(139, 92, 246, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      color: #fff;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent-pink));
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: #f1f5f9;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      border-radius: 8px;
+    }
+
+    /* Stats Section (Section 8) */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .stat-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px 20px;
+    }
+
+    .stat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .stat-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .stat-lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Main Grid Section 1: Product Info */
+    .product-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .product-info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .gallery-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .gallery-sub-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+    }
+
+    .img-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 10px;
+    }
+
+    .img-thumb {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      position: relative;
+    }
+
+    .img-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .img-thumb:hover img {
+      transform: scale(1.1);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-status {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .badge-tag {
+      background: rgba(139, 92, 246, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      margin: 3px;
+    }
+
+    /* Section 2: Marketing Cards Grid */
+    .marketing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .copy-box {
+      position: relative;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      color: #e2e8f0;
+      margin-top: 10px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .card-header-action {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Section 3 & 4: Prompts */
+    .prompt-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .prompt-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent-pink);
+    }
+
+    .prompt-text {
+      font-family: monospace;
+      font-size: 0.85rem;
+      background: #020617;
+      padding: 10px;
+      border-radius: 8px;
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .prompt-btns {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    /* Section 5: Schedule Table */
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+    }
+
+    th {
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.88rem;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Section 6: Calendar */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      text-align: center;
+    }
+
+    .calendar-day-head {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      padding: 8px 0;
+    }
+
+    .calendar-cell {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      min-height: 80px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .calendar-date-num {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .calendar-event {
+      font-size: 0.7rem;
+      padding: 3px 6px;
+      border-radius: 6px;
+      background: rgba(139, 92, 246, 0.25);
+      color: #c084fc;
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      width: 100%;
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Section 7: Checklist */
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(15, 23, 42, 0.5);
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .check-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .check-item.done span {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #10b981;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- HEADER & ACTION BAR (القسم التاسع: أزرار العمليات) -->
+    <header>
+      <div class="brand">
+        <div class="brand-logo">💎</div>
+        <div class="brand-title">
+          <h1>لوحة تسويق الإنستغرام وإعداد المحتوى</h1>
+          <p>إدارة بيانات المنتج، البرومبتات، والجدولة قبل النشر</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="btn btn-primary" onclick="copyAllData()">📋 نسخ كل البيانات</button>
+        <button class="btn btn-secondary" onclick="exportJSON()">💾 تصدير JSON</button>
+        <button class="btn btn-secondary" onclick="importJSONTrigger()">📥 استيراد JSON</button>
+        <button class="btn btn-secondary" onclick="downloadHTML()">📄 تحميل HTML</button>
+        <button class="btn btn-secondary" onclick="window.print()">🖨️ طباعة / PDF</button>
+        <input type="file" id="jsonInput" accept=".json" style="display:none" onchange="loadJSONFile(event)">
+      </div>
+    </header>
+
+    <!-- SECTION 8: STATS (القسم الثامن: إحصائيات) -->
+    <section>
+      <div class="stats-grid" id="statsGrid">
+        <!-- Dynamic Stats rendering -->
+      </div>
+    </section>
+
+    <!-- SECTION 1: PRODUCT INFO (القسم الأول: معلومات المنتج) -->
+    <section>
+      <h2 class="section-title">📦 القسم الأول: معلومات المنتج الأساسية</h2>
+      <div class="card product-info-grid">
+        <!-- Gallery -->
+        <div class="gallery-container">
+          <div>
+            <div class="gallery-sub-title">🖼️ الصور الأصلية للمنتج:</div>
+            <div class="img-grid" id="originalImages"></div>
+          </div>
+          <div style="margin-top: 12px;">
+            <div class="gallery-sub-title">✨ الصور المعدّلة بالتصاميم:</div>
+            <div class="img-grid" id="designedImages"></div>
+          </div>
+        </div>
+
+        <!-- Details -->
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <h2 id="pName" style="font-size: 1.3rem; font-weight: 800; color: #fff;"></h2>
+            <span id="pStatus" class="badge badge-status"></span>
+          </div>
+
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">الوصف المختصر:</span>
+            <p id="pShortDesc" style="font-size: 0.95rem; color: #e2e8f0; margin-top: 4px;"></p>
+          </div>
+
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">الوصف الكامل:</span>
+            <p id="pLongDesc" style="font-size: 0.9rem; color: #cbd5e1; margin-top: 4px; white-space: pre-line;"></p>
+          </div>
+
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">المميزات الأساسية:</span>
+            <ul id="pFeatures" style="padding-right: 18px; font-size: 0.88rem; color: #cbd5e1; margin-top: 4px;"></ul>
+          </div>
+
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">الاستخدامات:</span>
+            <p id="pUses" style="font-size: 0.88rem; color: #cbd5e1; margin-top: 4px;"></p>
+          </div>
+
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">الفئة المستهدفة:</span>
+            <p id="pTargetAudience" style="font-size: 0.88rem; color: var(--accent-cyan); font-weight: 600; margin-top: 4px;"></p>
+          </div>
+
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">الكلمات المفتاحية:</span>
+            <div id="pKeywords" style="margin-top: 6px;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: MARKETING CONTENT (القسم الثاني: المحتوى التسويقي) -->
+    <section>
+      <h2 class="section-title">📢 القسم الثاني: المحتوى التسويقي والإعلاني</h2>
+      <div class="marketing-grid" id="marketingGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- SECTION 3: IMAGE PROMPTS (القسم الثالث: برومبتات تصميم الصور) -->
+    <section>
+      <h2 class="section-title">🎨 القسم الثالث: برومبتات تصميم الصور (AI Image Prompts)</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;" id="imagePromptsGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- SECTION 4: VIDEO PROMPTS & SCRIPTS (القسم الرابع: برومبتات الفيديو والسيناريو) -->
+    <section>
+      <h2 class="section-title">🎬 القسم الرابع: سيناريوهات وبرومبتات الفيديو (Reels / TikTok)</h2>
+      <div class="marketing-grid" id="videoPromptsGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- SECTION 5: PUBLISHING SCHEDULE TABLE (القسم الخامس: خطة النشر) -->
+    <section>
+      <h2 class="section-title">📅 القسم الخامس: جدول خطة النشر المستهدفة</h2>
+      <div class="card table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>المنصة</th>
+              <th>نوع المحتوى</th>
+              <th>تاريخ النشر</th>
+              <th>وقت النشر</th>
+              <th>الهدف الترويجي</th>
+              <th>الحالة</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleTableBody">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 6: MONTHLY CALENDAR (القسم السادس: التقويم البصري) -->
+    <section>
+      <h2 class="section-title">🗓️ القسم السادس: التقويم الشهري لمواعيد النشر</h2>
+      <div class="card">
+        <div class="calendar-grid">
+          <div class="calendar-day-head">الأحد</div>
+          <div class="calendar-day-head">الإثنين</div>
+          <div class="calendar-day-head">الثلاثاء</div>
+          <div class="calendar-day-head">الأربعاء</div>
+          <div class="calendar-day-head">الخميس</div>
+          <div class="calendar-day-head">الجمعة</div>
+          <div class="calendar-day-head">السبت</div>
+        </div>
+        <div class="calendar-grid" id="calendarDays" style="margin-top: 8px;">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: CHECKLIST (القسم السابع: قائمة المهام) -->
+    <section>
+      <h2 class="section-title">✅ القسم السابع: قائمة مهام التجهيز والنشر (Checklist)</h2>
+      <div class="card checklist" id="checklistGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast">
+    <span>✅</span> <span id="toastMsg">تم النسخ للحافظة بنجاح!</span>
+  </div>
+
+  <!-- ==========================================================================
+       DATA & JAVASCRIPT LOGIC
+       ========================================================================== -->
+  <script>
+    /**
+     * MASTER DATA OBJECT (يمكنك تعديل أي بيانات هنا دون لمس كود الصفحة)
+     */
+    let PRODUCT_DATA = {
+      "product_info": {
+        "name": "آيشادو واآيشاينر السائب Magic Colour Shiner (Ffiomror)",
+        "status": "جاهز للنشر",
+        "short_description": "بودرة آيشادو وشاينر سائبة بدرجة إضاءة ماسية براقة، تمنح جفونك ومدمع عينيك بريقاً ساحراً يدوم حتى 12 ساعة متواصلة مع تركيبة مغذية بغنية بفيتامينات (E & C).",
+        "long_description": "امنحي عينيك إشراقة ساحرة ولفتة أنثوية لا تُقاوم مع آيشادو واآيشاينر Ffiomror السائب.\nتركيبة فريدة غنية بـ فيتامين E و C تضمن لكِ لمعة ماسية براقة تضفي حيوية وجاذبية على مكياجك وتدوم حتى 12 ساعة متواصلة بدون أي تكتل أو بهتان.\nمناسب للمكياج اليومي الفاخر والمناسبات والعرائس في قطاع غزة مع خدمة التوصيل حتى باب المنزل.",
+        "features": [
+          "ثبات عالي ومقاوم للتكتل يدوم حتى 12 ساعة.",
+          "غني بالفيتامينات (Vitamin E / Vitamin C) المغذية للبشرة.",
+          "بريق كريستالي ناعم يندمج بانسجام مع كل ألوان المكياج.",
+          "متعدد الاستخدامات: آيشادو، مدمع العين، أو هايلايتر للوجه."
+        ],
+        "uses": "تظليل وإضاءة الجفون، مدمع العين، أعلى الوجنتين، وإبرام لمسات الإضاءة للمناسبات والعرائس.",
+        "target_audience": "الصبايا والسيدات في قطاع غزة، خبيرات التجميل، والعرائس.",
+        "keywords": ["آيشادو سائب", "شاينر عيون", "لمعة الماس", "مكياج عيون غزة", "هايلايتر", "توصيل غزة"],
+        "original_images": [
+          "/uploads/loose-eyeshadow.jpeg"
+        ],
+        "designed_images": [
+          "/uploads/loose-eyeshadow-edited.jpg",
+          "/uploads/loose-eyeshadow-luxury-edited.jpg"
+        ]
+      },
+      "marketing_content": {
+        "instagram_caption": "عيونك بتستاهل البريق اللي بيلفت الأنظار! ✨\nسر اللمعة الكريستالية الثابتة طوال اليوم هو آيشادو Ffiomror Magic Colour Shiner السائب! 😍\n\n💎 لمعة ماسية بتدوم 12 ساعة بدون تكتل.\n🌿 غني بفيتامينات (E & C) لحماية وترطيب جفونك.\n✨ متعدد الاستخدامات (آيشادو، مدمع العين، أو هايلايتر).\n\n🚗 التوصيل متوفر حتى باب المنزل في جميع مناطق قطاع غزة!\n👇 اطلبي الآن واحصلي على لمستك الساحرة اليوم!",
+        "facebook_post": "لكل صبيّة بتحب مكياج العيون يضل يلمع ويحكي أنوثة طول اليوم! 💖\nوصل حديثاً: آيشادو واآيشاينر Ffiomror السائب برائحة اللمعة الماسية وثبات 12 ساعة!\n\nلماذا تختارين هذا المنتج؟\n✔️ لمعة قوية وكريستالية تظهر من أول لمسة.\n✔️ تركيبة مغذية خفيفة على العين تحتوي على فيتامين E و C.\n✔️ بتقدري تستخدميه كآيشادو، لإضاءة مدمع العين، أو كهايلايتر للوجه.\n\n🚚 خدمة التوصيل السريع متوفرة حتى باب بيتك في قطاع غزة!\n📥 أرسلي لنا رسالة على الصفحة لتجهيز طلبك فوراً!",
+        "short_ad": "أضيفي لمعة الماس لعيونك اليوم! ✨ آيشادو Ffiomror السائب بثبات 12 ساعة وفيتامين E&C. التوصيل متوفر ل باب بيتك بغزة! 🚚",
+        "cta": "اضغطي على رابط المتجر أو راسلينا عبر الواتساب للتوصيل المباشر حتى باب منزلك في غزة!",
+        "hashtags": "#مكياج_غزة #آيشادو_برّاق #تجميل_غزة #نوفا_بيور #مكياج_عرايس #توصيل_غزة #هايلايتر #جمالك_غزة",
+        "marketing_words": "لمعة ماسية • ثبات 12 ساعة • فيتامين E&C • إضاءة كريستالية • توصيل غزة",
+        "selling_points": "• ثبات لمدة 12 ساعة متواصلة\n• تغذية وحماية بفيتامينات E و C\n• تعدد الاستخدامات للعين والوجه\n• التوصيل المنزلي لغزة",
+        "offer_ideas": "• باقة الإشراقة: شراء 2 عبوة آيشادو + توصيل مجاني.\n• خصم خاص 15% للعرائس وصالونات التجميل في غزة."
+      },
+      "image_prompts": [
+        {
+          "name": "صورة الاستوديو الرئيسية",
+          "prompt": "A professional product photography of 'ffiiomror Loose EYESHADOW Magic Colour Shiner' bottle with vibrant pink cap and shimmering silver crystal powder inside, sitting on a clean luxury white studio podium with subtle pink rose petals and elegant lighting. Studio high resolution 4k."
+        },
+        {
+          "name": "صورة الحملة الفاخرة",
+          "prompt": "Luxury beauty promotional shot of a shimmering loose eyeshadow glitter product next to elegant makeup brushes and glowing skin swatch, soft rose gold and sparkling crystal bokeh background, high aesthetics luxury beauty campaign."
+        }
+      ],
+      "video_prompts": {
+        "video_generation_prompt": "A luxury 4k commercial product video of loose eyeshadow glitter bottle shimmering under studio soft lighting, close up view of powder texture and crystal reflection.",
+        "script_15s": "0-3ث: زوم على العبوة واللمعة تضيء تحت الضوء.\n3-9ث: مسحة باليد لإظهار انعكاس الضوء الكريستالي والثبات.\n9-15ث: عرض شعار المتجر والتوصيل لباب البيت بغزة.",
+        "script_30s": "0-7ث: استعراض إطلالة عيون مطفأة وتطبيق الآيشادو.\n7-18ث: توضيح الاستخدامات الـ 3 (آيشادو، مدمع العين، هايلايتر).\n18-30ث: تجربة الثبات 12 ساعة ودعوة الشراء للتوصيل لغزة.",
+        "voiceover": "بدك لمعة عيون تضل ثابتة ومشرقة 12 ساعة؟ جربي الآيشادو السائب من Ffiomror واطلبي والتوصيل ل باب بيتك بغزة!",
+        "screen_text": "سر اللمعة الكريستالية ✨ | ثبات 12 ساعة | غني بفيتامينات E & C | التوصيل حتى باب المنزل في غزة 🚚",
+        "suggested_scenes": "مشهد زوم مكبّر للعبوة • مشهد التوزيع بأطراف الأصابع • مشهد انعكاس الضوء • مشهد صندوق التوصيل",
+        "music": "موسيقى ترند هادئة ورنانة مع نغمات كريستالية ناعمة."
+      },
+      "schedule": [
+        { "platform": "Instagram Post", "type": "صورة فاخرة", "date": "2026-08-01", "time": "18:00", "goal": "إطلاق المنتج والمميزات", "status": "مجدول" },
+        { "platform": "Instagram Reel", "type": "فيديو 15 ثانية", "date": "2026-08-03", "time": "20:00", "goal": "رفع التفاعل والوصول", "status": "قيد التجهيز" },
+        { "platform": "Facebook", "type": "منشور نصي وصورة", "date": "2026-08-05", "time": "19:00", "goal": "تحويل وتوصيل غزة", "status": "مجدول" },
+        { "platform": "TikTok", "type": "فيديو 30 ثانية", "date": "2026-08-08", "time": "21:00", "goal": "انتشار ومحتوى تعليمي", "status": "مسودة" }
+      ],
+      "checklist": [
+        { "id": 1, "task": "تم إنشاء الصور المصممة", "done": true },
+        { "id": 2, "task": "تم إنشاء فيديوهات السيناريو", "done": true },
+        { "id": 3, "task": "تمت مراجعة المحتوى التسويقي", "done": true },
+        { "id": 4, "task": "تم رفع المنتج على المتجر", "done": true },
+        { "id": 5, "task": "تمت جدولة المنشورات", "done": false },
+        { "id": 6, "task": "تم النشر الرسمي", "done": false },
+        { "id": 7, "task": "تمت متابعة التفاعل والطلبات", "done": false }
+      ]
+    };
+
+    /* INITIALIZATION & RENDERING */
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAll();
+    });
+
+    function renderAll() {
+      renderStats();
+      renderProductInfo();
+      renderMarketingGrid();
+      renderImagePrompts();
+      renderVideoPrompts();
+      renderScheduleTable();
+      renderCalendar();
+      renderChecklist();
+    }
+
+    /* SECTION 8: STATS */
+    function renderStats() {
+      const p = PRODUCT_DATA.product_info;
+      const m = PRODUCT_DATA.marketing_content;
+      const s = PRODUCT_DATA.schedule;
+
+      const stats = [
+        { label: "عدد الصور", val: p.original_images.length + p.designed_images.length, icon: "🖼️", color: "#8b5cf6" },
+        { label: "عدد الفيديوهات", val: 2, icon: "🎬", color: "#ec4899" },
+        { label: "عدد المنشورات", val: 4, icon: "📢", color: "#06b6d4" },
+        { label: "عدد البرومبتات", val: PRODUCT_DATA.image_prompts.length + 1, icon: "🎨", color: "#f59e0b" },
+        { label: "المواعيد المجدولة", val: s.length, icon: "📅", color: "#10b981" }
+      ];
+
+      document.getElementById('statsGrid').innerHTML = stats.map(st => `
+        <div class="stat-card">
+          <div class="stat-icon" style="background:${st.color}20; color:${st.color};">${st.icon}</div>
+          <div>
+            <div class="stat-val">${st.val}</div>
+            <div class="stat-lbl">${st.label}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* SECTION 1: PRODUCT INFO */
+    function renderProductInfo() {
+      const p = PRODUCT_DATA.product_info;
+      document.getElementById('pName').innerText = p.name;
+      document.getElementById('pStatus').innerText = p.status;
+      document.getElementById('pShortDesc').innerText = p.short_description;
+      document.getElementById('pLongDesc').innerText = p.long_description;
+      document.getElementById('pUses').innerText = p.uses;
+      document.getElementById('pTargetAudience').innerText = p.target_audience;
+
+      document.getElementById('pFeatures').innerHTML = p.features.map(f => `<li>${f}</li>`).join('');
+      document.getElementById('pKeywords').innerHTML = p.keywords.map(k => `<span class="badge badge-tag">#${k}</span>`).join('');
+
+      document.getElementById('originalImages').innerHTML = p.original_images.map(img => `
+        <div class="img-thumb"><img src="${img}" alt="Original"></div>
+      `).join('');
+
+      document.getElementById('designedImages').innerHTML = p.designed_images.map(img => `
+        <div class="img-thumb"><img src="${img}" alt="Designed"></div>
+      `).join('');
+    }
+
+    /* SECTION 2: MARKETING CARDS */
+    function renderMarketingGrid() {
+      const m = PRODUCT_DATA.marketing_content;
+      const cards = [
+        { title: "📸 Caption إنستغرام", text: m.instagram_caption },
+        { title: "📘 منشور فيسبوك", text: m.facebook_post },
+        { title: "⚡ إعلان قصير", text: m.short_ad },
+        { title: "🎯 Call To Action", text: m.cta },
+        { title: "🏷️ الهاشتاقات", text: m.hashtags },
+        { title: "💡 الكلمات التسويقية", text: m.marketing_words },
+        { title: "🌟 نقاط البيع الأساسية", text: m.selling_points },
+        { title: "🎁 أفكار العروض", text: m.offer_ideas }
+      ];
+
+      document.getElementById('marketingGrid').innerHTML = cards.map(c => `
+        <div class="card">
+          <div class="card-header-action">
+            <h3 style="font-size:0.95rem; font-weight:700; color:#fff;">${c.title}</h3>
+            <button class="btn btn-secondary btn-sm" onclick="copyText('${escapeJsString(c.text)}')">📋 نسخ</button>
+          </div>
+          <div class="copy-box">${c.text}</div>
+        </div>
+      `).join('');
+    }
+
+    /* SECTION 3: IMAGE PROMPTS */
+    function renderImagePrompts() {
+      document.getElementById('imagePromptsGrid').innerHTML = PRODUCT_DATA.image_prompts.map((ip, idx) => `
+        <div class="prompt-card">
+          <div class="prompt-title">🎨 ${ip.name}</div>
+          <div class="prompt-text" id="pPrompt_${idx}">${ip.prompt}</div>
+          <div class="prompt-btns">
+            <button class="btn btn-secondary btn-sm" onclick="copyText('${escapeJsString(ip.prompt)}')">📋 نسخ</button>
+            <button class="btn btn-secondary btn-sm" onclick="editPrompt(${idx})">✏️ تعديل</button>
+            <button class="btn btn-primary btn-sm" onclick="showToast('تم إرسال طلب إعادة التوليد!')">🔄 إعادة توليد</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* SECTION 4: VIDEO PROMPTS & SCRIPTS */
+    function renderVideoPrompts() {
+      const v = PRODUCT_DATA.video_prompts;
+      const items = [
+        { title: "🤖 برومبت إنشاء الفيديو (AI Prompt)", text: v.video_generation_prompt },
+        { title: "⏱️ سيناريو 15 ثانية", text: v.script_15s },
+        { title: "⏱️ سيناريو 30 ثانية", text: v.script_30s },
+        { title: "🎙️ التعليق الصوتي (Voiceover)", text: v.voiceover },
+        { title: "💬 النصوص على الشاشة", text: v.screen_text },
+        { title: "🎬 المشاهد المقترحة", text: v.suggested_scenes },
+        { title: "🎵 الموسيقى المقترحة", text: v.music }
+      ];
+
+      document.getElementById('videoPromptsGrid').innerHTML = items.map(item => `
+        <div class="card">
+          <div class="card-header-action">
+            <h3 style="font-size:0.95rem; font-weight:700; color:var(--accent-pink);">${item.title}</h3>
+            <button class="btn btn-secondary btn-sm" onclick="copyText('${escapeJsString(item.text)}')">📋 نسخ</button>
+          </div>
+          <div class="copy-box">${item.text}</div>
+        </div>
+      `).join('');
+    }
+
+    /* SECTION 5: SCHEDULE TABLE */
+    function renderScheduleTable() {
+      document.getElementById('scheduleTableBody').innerHTML = PRODUCT_DATA.schedule.map(row => `
+        <tr>
+          <td style="font-weight:700; color:#fff;">${row.platform}</td>
+          <td>${row.type}</td>
+          <td>${row.date}</td>
+          <td>${row.time}</td>
+          <td>${row.goal}</td>
+          <td><span class="badge badge-status">${row.status}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    /* SECTION 6: MONTHLY CALENDAR */
+    function renderCalendar() {
+      const daysContainer = document.getElementById('calendarDays');
+      let html = '';
+      
+      // Empty offset cells for start of month
+      for(let i=0; i<6; i++) {
+        html += `<div class="calendar-cell" style="opacity:0.3;"><span class="calendar-date-num">${26+i}</span></div>`;
+      }
+
+      // Days 1 to 30
+      for(let d=1; d<=30; d++) {
+        const dateStr = `2026-08-${d < 10 ? '0'+d : d}`;
+        const events = PRODUCT_DATA.schedule.filter(s => s.date === dateStr);
+        
+        let eventsHtml = events.map(ev => `
+          <div class="calendar-event" title="${ev.platform}: ${ev.goal}">${ev.platform}</div>
+        `).join('');
+
+        html += `
+          <div class="calendar-cell">
+            <span class="calendar-date-num">${d}</span>
+            ${eventsHtml}
+          </div>
+        `;
+      }
+
+      daysContainer.innerHTML = html;
+    }
+
+    /* SECTION 7: CHECKLIST */
+    function renderChecklist() {
+      document.getElementById('checklistGrid').innerHTML = PRODUCT_DATA.checklist.map(chk => `
+        <div class="check-item ${chk.done ? 'done' : ''}" onclick="toggleCheck(${chk.id})">
+          <input type="checkbox" ${chk.done ? 'checked' : ''} onclick="event.stopPropagation(); toggleCheck(${chk.id})">
+          <span style="font-size:0.9rem; font-weight:600; color:#e2e8f0;">${chk.task}</span>
+        </div>
+      `).join('');
+    }
+
+    function toggleCheck(id) {
+      const item = PRODUCT_DATA.checklist.find(c => c.id === id);
+      if(item) {
+        item.done = !item.done;
+        renderChecklist();
+        showToast(`تم تحديث حالة: ${item.task}`);
+      }
+    }
+
+    /* PROMPT EDITING */
+    function editPrompt(idx) {
+      const current = PRODUCT_DATA.image_prompts[idx].prompt;
+      const updated = prompt("تعديل البرومبت:", current);
+      if(updated !== null && updated.trim() !== "") {
+        PRODUCT_DATA.image_prompts[idx].prompt = updated.trim();
+        renderImagePrompts();
+        renderStats();
+        showToast("تم تحديث البرومبت بنجاح!");
+      }
+    }
+
+    /* UTILS & ACTIONS (SECTION 9) */
+    function copyText(str) {
+      navigator.clipboard.writeText(str).then(() => {
+        showToast("تم النسخ للحافظة بنجاح! 📋");
+      });
+    }
+
+    function copyAllData() {
+      const fullText = JSON.stringify(PRODUCT_DATA, null, 2);
+      navigator.clipboard.writeText(fullText).then(() => {
+        showToast("تم نسخ جميع بيانات اللوحة بالكامل! 🚀");
+      });
+    }
+
+    function exportJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(PRODUCT_DATA, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `marketing-data-${Date.now()}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast("تم تحميل ملف JSON بنجاح!");
+    }
+
+    function importJSONTrigger() {
+      document.getElementById('jsonInput').click();
+    }
+
+    function loadJSONFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const importedData = JSON.parse(e.target.result);
+          PRODUCT_DATA = importedData;
+          renderAll();
+          showToast("تم استيراد البيانات وتحديث اللوحة بنجاح! 🎉");
+        } catch {
+          alert("ملف JSON غير صالح!");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function downloadHTML() {
+      const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: "text/html" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `instagram-marketing-dashboard.html`;
+      a.click();
+      showToast("تم تحميل ملف الـ HTML بنجاح!");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function escapeJsString(str) {
+      return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n');
+    }
+  </script>
+</body>
+</html>
