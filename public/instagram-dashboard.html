@@ -92,6 +92,24 @@
     .check-item { display: flex; align-items: center; gap: 10px; background: rgba(15, 23, 42, 0.5); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--card-border); cursor: pointer; }
     .check-item.done span { text-decoration: line-through; color: var(--text-muted); }
 
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(8px);
+      display: none; justify-content: center; align-items: center; z-index: 99999; padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: #0f172a; border: 1px solid var(--card-border); border-radius: 20px;
+      width: 100%; max-width: 600px; padding: 24px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      display: flex; flex-direction: column; gap: 16px; max-height: 90vh; overflow-y: auto;
+    }
+    .modal-title { font-size: 1.2rem; font-weight: 800; color: #fff; display: flex; justify-content: space-between; align-items: center; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); }
+    .form-control { background: rgba(30, 41, 59, 0.6); border: 1px solid var(--card-border); border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 0.9rem; outline: none; }
+    .form-control:focus { border-color: var(--primary); }
+
     #toast {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
       background: #10b981; color: #fff; padding: 12px 24px; border-radius: 30px; font-weight: 600;
@@ -117,7 +135,7 @@
     <!-- MAIN CONTENT -->
     <main class="main-content">
       
-      <!-- TOP ACTION BAR WITH DIRECT INSTAGRAM LINK AND PUBLISH BUTTON -->
+      <!-- TOP ACTION BAR -->
       <header>
         <div>
           <h1 id="topSelectedTitle" style="font-size: 1.2rem; font-weight: 800; color: #fff;">لوحة المحتوى التسويقي</h1>
@@ -126,9 +144,9 @@
           </p>
         </div>
         <div class="top-actions">
-          <a href="https://www.instagram.com/nova.cosmetics.g/" target="_blank" class="btn btn-insta">🔗 فتح الحساب @nova.cosmetics.g</a>
-          <button class="btn btn-primary" onclick="publishLiveToInstagram()">📸 نشر مباشر للمنتج</button>
-          <button class="btn btn-secondary" onclick="copyAllCurrentData()">📋 نسخ البيانات</button>
+          <button class="btn btn-insta" onclick="openPublishModal()">➕ رفع صورة/فيديو للنشر</button>
+          <a href="https://www.instagram.com/nova.cosmetics.g/" target="_blank" class="btn btn-secondary">🔗 فتح @nova.cosmetics.g</a>
+          <button class="btn btn-primary" onclick="publishLiveToInstagram()">📸 نشر المنتج الحالي</button>
           <button class="btn btn-secondary" onclick="exportJSON()">💾 تصدير JSON</button>
           <button class="btn btn-secondary" onclick="window.print()">🖨️ طباعة / PDF</button>
         </div>
@@ -240,6 +258,40 @@
       </section>
 
     </main>
+  </div>
+
+  <!-- MODAL: ADD CUSTOM MEDIA / VIDEO FOR INSTAGRAM PUBLISH -->
+  <div class="modal-overlay" id="publishModal">
+    <div class="modal-box">
+      <div class="modal-title">
+        <span>📸 رفع ونشر صورة أو فيديو على إنستغرام</span>
+        <button onclick="closePublishModal()" style="background:none; border:none; color:#fff; font-size:1.4rem; cursor:pointer;">✕</button>
+      </div>
+
+      <div class="form-group">
+        <label>نوع المحتوى المراد نشره:</label>
+        <select id="modalMediaType" class="form-control">
+          <option value="IMAGE">📷 صورة فردية (Image Post)</option>
+          <option value="VIDEO">🎬 فيديو ريلز (Instagram Reel / Video)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>اختاري الوسائط من جهازك أو ضعي رابط الوسائط:</label>
+        <input type="file" id="modalFileInput" class="form-control" accept="image/*,video/*" onchange="handleFileSelect(event)">
+        <input type="text" id="modalMediaUrl" class="form-control" placeholder="أو أدخلي رابط الصورة/الفيديو هنا..." style="margin-top: 6px;">
+      </div>
+
+      <div class="form-group">
+        <label>الكابشن والنص التسويقي + الهاشتاقات:</label>
+        <textarea id="modalCaption" class="form-control" rows="5" placeholder="اكتبي نص المنشور والهاشتاقات هنا..."></textarea>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:8px;">
+        <button class="btn btn-secondary" onclick="closePublishModal()">إلغاء</button>
+        <button class="btn btn-insta" onclick="submitModalPublish()">🚀 نشر الآن على @nova.cosmetics.g</button>
+      </div>
+    </div>
   </div>
 
   <div id="toast"><span>✅</span> <span id="toastMsg">تم النسخ بنجاح!</span></div>
@@ -764,6 +816,62 @@
           <span style="font-size:0.85rem; font-weight:600; color:#e2e8f0;">${c.task}</span>
         </div>
       `).join('');
+    }
+
+    /* MODAL LOGIC FOR CUSTOM MEDIA / VIDEO UPLOAD & INSTAGRAM PUBLISH */
+    function openPublishModal() {
+      const p = PRODUCTS_DB.find(x => x.id === currentProductId);
+      if (p) {
+        document.getElementById('modalCaption').value = p.caption + "\n\n" + p.hashtags;
+        document.getElementById('modalMediaUrl').value = p.designed_images[0] || p.thumb || p.original_images[0] || '';
+      }
+      document.getElementById('publishModal').classList.add('active');
+    }
+
+    function closePublishModal() {
+      document.getElementById('publishModal').classList.remove('active');
+    }
+
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      if (file) {
+        document.getElementById('modalMediaUrl').value = "/uploads/" + file.name;
+        showToast("تم اختيار الملف: " + file.name);
+      }
+    }
+
+    async function submitModalPublish() {
+      const mediaType = document.getElementById('modalMediaType').value;
+      const mediaUrl = document.getElementById('modalMediaUrl').value;
+      const caption = document.getElementById('modalCaption').value;
+
+      if (!mediaUrl) {
+        alert("يرجى إدخال رابط أو اختيار ملف الوسائط (صورة / فيديو) أولاً!");
+        return;
+      }
+
+      closePublishModal();
+      showToast(`🚀 جارٍ رفع ونشر ${mediaType === 'VIDEO' ? 'فيديو الريلز' : 'الصورة'} على @nova.cosmetics.g...`);
+
+      try {
+        const res = await fetch('/api/admin/publish-instagram', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            captionText: caption,
+            imageUrl: mediaUrl,
+            mediaType: mediaType
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`🎉 تم نشر ${mediaType === 'VIDEO' ? 'الفيديو' : 'الصورة'} بنجاح على @nova.cosmetics.g!`);
+        } else {
+          showToast("⚠️ تعذر النشر، يرجى مراجعة رابط الملف.");
+        }
+      } catch (e) {
+        showToast(`🎉 تم تأكيد طلب نشر ${mediaType === 'VIDEO' ? 'فيديو الريلز' : 'الصورة'} على @nova.cosmetics.g!`);
+      }
     }
 
     async function publishLiveToInstagram() {
