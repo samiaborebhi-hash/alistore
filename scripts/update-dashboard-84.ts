@@ -1,9 +1,13 @@
 import { db } from '../src/lib/db'
 import fs from 'fs'
+import path from 'path'
 
 async function updateDashboardWithAll84() {
   const dbProducts = await db.product.findMany()
   console.log('Fetched total products count:', dbProducts.length)
+
+  const siteUrl = 'https://novapure.beauty'
+  const localUploadsDir = 'C:/Users/zizo-/OneDrive/Desktop/alipro/public'
 
   const formattedProducts = dbProducts.map((p) => {
     let imgs: string[] = []
@@ -14,19 +18,27 @@ async function updateDashboardWithAll84() {
     }
     if (!imgs.length) imgs = ['/uploads/loose-eyeshadow-edited.jpg']
 
+    // Ensure full working URLs for desktop HTML file
+    const fullImgs = imgs.map((img) => {
+      if (!img) return siteUrl + '/uploads/loose-eyeshadow-edited.jpg'
+      if (img.startsWith('http')) return img
+      const cleanPath = img.startsWith('/') ? img : '/' + img
+      return siteUrl + cleanPath
+    })
+
     return {
       id: p.id,
       name: p.name,
       status: 'جاهز للنشر',
-      thumb: imgs[0],
+      thumb: fullImgs[0],
       short_description: p.descriptionAr || (p.description ? p.description.substring(0, 100) : 'منتج تجميل وعناية ممتاز عالي الجودة متاح في قطاع غزة.'),
       long_description: p.description || p.descriptionAr || 'منتج تجميل عالي الجودة متوفر بخصم مميز وخدمة توصيل سريعة لجميع مناطق قطاع غزة.',
       features: ['ثبات جودة عالية', 'مناسب لجميع أنواع البشرة', 'منتج أصلي 100%', 'توصيل منزلي ل غزة'],
       uses: 'الاستخدام اليومي والمناسبات التجميلية.',
       target_audience: 'الصبايا والسيدات في قطاع غزة.',
       keywords: [p.name.split(' ')[0], 'مكياج غزة', 'عناية غزة', 'توصيل غزة'],
-      original_images: imgs,
-      designed_images: imgs,
+      original_images: fullImgs,
+      designed_images: fullImgs,
       caption: `✨ ${p.name} ✨\n\n${p.description || p.descriptionAr || 'منتج تجميل عالي الجودة ومميز لمظهر أنيق وطبيعي!'}\n\n🚗 التوصيل السريع متوفر حتى باب المنزل في جميع مناطق قطاع غزة! 🇵🇸\n\n👇 اطلبي منتجكِ الآن عبر الموقع الرسمي:\nhttps://novapure.beauty\n\n#مكياج_غزة #تجميل_غزة #نوفا_بيور #توصيل_غزة #غزة`,
       facebook_post: `وصل حديثاً في متجر NOVA Cosmetics: ${p.name}!\nتوصيل سريع حتى باب المنزل في قطاع غزة. 🚚\nأطلبي الآن عبر الموقع الرسمي: https://novapure.beauty`,
       short_ad: `اكتشفي إشراقة ${p.name} اليوم! ✨ التوصيل متوفر ل باب بيتك بغزة 🚚`,
@@ -56,7 +68,7 @@ async function updateDashboardWithAll84() {
     const newDbStr = 'const PRODUCTS_DB = ' + JSON.stringify(formattedProducts, null, 2) + ';'
     htmlContent = htmlContent.replace(dbRegex, newDbStr)
     fs.writeFileSync(desktopPath, htmlContent, 'utf8')
-    console.log('Successfully updated Desktop instagram-dashboard.html with ALL 84 products!')
+    console.log('Successfully updated Desktop instagram-dashboard.html with working full image URLs!')
   }
 }
 
