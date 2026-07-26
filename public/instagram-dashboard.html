@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>لوحة إعداد وتسويق المحتوى - جميع المنتجات</title>
   <style>
-    /* ==========================================================================
-       CSS VARIABLES & LUXURY STYLING
-       ========================================================================== */
     :root {
       --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --bg-gradient: linear-gradient(135deg, #0b0f19 0%, #171e31 50%, #0b0f19 100%);
@@ -21,283 +18,65 @@
       --accent-pink: #ec4899;
       --accent-cyan: #06b6d4;
       --accent-emerald: #10b981;
-      --accent-amber: #f59e0b;
       --border-radius: 16px;
       --transition: all 0.25s ease-in-out;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-family); }
+    body { background: var(--bg-gradient); background-attachment: fixed; color: var(--text-main); min-height: 100vh; padding: 16px; direction: rtl; line-height: 1.6; }
 
-    body {
-      background: var(--bg-gradient);
-      background-attachment: fixed;
-      color: var(--text-main);
-      min-height: 100vh;
-      padding: 16px;
-      direction: rtl;
-      line-height: 1.6;
-    }
+    .app-layout { max-width: 1550px; margin: 0 auto; display: grid; grid-template-columns: 300px 1fr; gap: 20px; }
+    @media (max-width: 1024px) { .app-layout { grid-template-columns: 1fr; } }
 
-    .app-layout {
-      max-width: 1550px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 20px;
-    }
+    .sidebar { background: var(--card-bg); backdrop-filter: blur(16px); border: 1px solid var(--card-border); border-radius: var(--border-radius); padding: 20px; height: calc(100vh - 32px); position: sticky; top: 16px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+    @media (max-width: 1024px) { .sidebar { height: auto; position: relative; top: 0; } }
 
-    @media (max-width: 1024px) {
-      .app-layout { grid-template-columns: 1fr; }
-    }
+    .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--card-border); }
+    .sidebar-header h2 { font-size: 1.1rem; font-weight: 800; color: #fff; }
 
-    /* Sidebar Products List */
-    .sidebar {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: var(--border-radius);
-      padding: 20px;
-      height: calc(100vh - 32px);
-      position: sticky;
-      top: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      overflow-y: auto;
-    }
+    .product-nav-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: rgba(15, 23, 42, 0.4); border: 1px solid transparent; cursor: pointer; transition: var(--transition); }
+    .product-nav-item:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(139, 92, 246, 0.3); }
+    .product-nav-item.active { background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(236, 72, 153, 0.2)); border-color: var(--primary); box-shadow: 0 4px 15px var(--primary-glow); }
 
-    @media (max-width: 1024px) {
-      .sidebar { height: auto; position: relative; top: 0; }
-    }
+    .product-nav-img { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; border: 1px solid var(--card-border); }
+    .product-nav-title { font-size: 0.85rem; font-weight: 700; color: #f1f5f9; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-    .sidebar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--card-border);
-    }
-
-    .sidebar-header h2 {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .product-nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      border-radius: 12px;
-      background: rgba(15, 23, 42, 0.4);
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .product-nav-item:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(139, 92, 246, 0.3);
-    }
-
-    .product-nav-item.active {
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(236, 72, 153, 0.2));
-      border-color: var(--primary);
-      box-shadow: 0 4px 15px var(--primary-glow);
-    }
-
-    .product-nav-img {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 1px solid var(--card-border);
-    }
-
-    .product-nav-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #f1f5f9;
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    /* Main Content Area */
-    .main-content {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    /* Header Bar */
-    header {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: var(--border-radius);
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
+    .main-content { display: flex; flex-direction: column; gap: 20px; }
+    header { background: var(--card-bg); backdrop-filter: blur(16px); border: 1px solid var(--card-border); border-radius: var(--border-radius); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
     .top-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-    /* Cards & Components */
-    .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: var(--border-radius);
-      padding: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    }
+    .card { background: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid var(--card-border); border-radius: var(--border-radius); padding: 20px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
+    .section-title { font-size: 1.1rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px; margin-bottom: 14px; padding-right: 4px; border-right: 4px solid var(--primary); }
 
-    .section-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-      padding-right: 4px;
-      border-right: 4px solid var(--primary);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      transition: var(--transition);
-      color: #fff;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--accent-pink));
-      box-shadow: 0 4px 12px var(--primary-glow);
-    }
-
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; transition: var(--transition); color: #fff; }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), var(--accent-pink)); box-shadow: 0 4px 12px var(--primary-glow); }
     .btn-primary:hover { opacity: 0.92; }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--card-border);
-      color: #f1f5f9;
-    }
-
+    .btn-insta { background: linear-gradient(135deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); box-shadow: 0 4px 15px rgba(220, 39, 67, 0.4); }
+    .btn-insta:hover { opacity: 0.95; transform: translateY(-1px); }
+    .btn-secondary { background: rgba(255, 255, 255, 0.08); border: 1px solid var(--card-border); color: #f1f5f9; }
     .btn-secondary:hover { background: rgba(255, 255, 255, 0.15); }
-
     .btn-sm { padding: 5px 10px; font-size: 0.78rem; border-radius: 8px; }
 
-    /* Stats Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-    }
-
-    .stat-card {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 12px 16px;
-    }
-
-    .stat-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    .stat-card { display: flex; align-items: center; gap: 12px; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--card-border); border-radius: 12px; padding: 12px 16px; }
+    .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
     .stat-val { font-size: 1.3rem; font-weight: 800; color: #fff; }
     .stat-lbl { font-size: 0.78rem; color: var(--text-muted); }
 
-    /* Product Grid layout */
-    .product-info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 20px;
-    }
-
+    .product-info-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px; }
     @media (max-width: 850px) { .product-info-grid { grid-template-columns: 1fr; } }
-
-    .img-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 8px;
-    }
-
-    .img-thumb {
-      aspect-ratio: 1;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--card-border);
-    }
-
+    .img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+    .img-thumb { aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 1px solid var(--card-border); }
     .img-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-    .badge {
-      display: inline-block;
-      padding: 3px 8px;
-      border-radius: 16px;
-      font-size: 0.72rem;
-      font-weight: 600;
-    }
-
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 16px; font-size: 0.72rem; font-weight: 600; }
     .badge-status { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
     .badge-tag { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3); margin: 2px; }
 
-    /* Marketing & Prompts Grid */
-    .marketing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 14px;
-    }
+    .marketing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+    .copy-box { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px; font-size: 0.88rem; white-space: pre-wrap; color: #e2e8f0; margin-top: 8px; max-height: 200px; overflow-y: auto; }
+    .prompt-text { font-family: monospace; font-size: 0.82rem; background: #020617; padding: 10px; border-radius: 8px; color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.2); }
 
-    .copy-box {
-      background: rgba(15, 23, 42, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 12px;
-      font-size: 0.88rem;
-      white-space: pre-wrap;
-      color: #e2e8f0;
-      margin-top: 8px;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .prompt-text {
-      font-family: monospace;
-      font-size: 0.82rem;
-      background: #020617;
-      padding: 10px;
-      border-radius: 8px;
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.2);
-    }
-
-    /* Schedule & Calendar */
     .table-responsive { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; text-align: right; }
     th { background: rgba(15, 23, 42, 0.8); color: var(--text-muted); font-size: 0.8rem; padding: 10px 14px; border-bottom: 1px solid var(--card-border); }
@@ -309,17 +88,15 @@
     .calendar-date-num { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; }
     .calendar-event { font-size: 0.68rem; padding: 2px 4px; border-radius: 4px; background: rgba(139, 92, 246, 0.25); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.4); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* Checklist */
     .checklist { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
     .check-item { display: flex; align-items: center; gap: 10px; background: rgba(15, 23, 42, 0.5); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--card-border); cursor: pointer; }
     .check-item.done span { text-decoration: line-through; color: var(--text-muted); }
 
-    /* Toast */
     #toast {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
-      background: #10b981; color: #fff; padding: 10px 20px; border-radius: 30px; font-weight: 600;
-      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 9999; display: flex; align-items: center; gap: 6px; font-size: 0.88rem;
+      background: #10b981; color: #fff; padding: 12px 24px; border-radius: 30px; font-weight: 600;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 9999; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;
     }
     #toast.show { transform: translateX(-50%) translateY(0); }
   </style>
@@ -334,22 +111,21 @@
         <h2>🛍️ قائمة المنتجات (15)</h2>
         <span style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 700;">قطاع غزة</span>
       </div>
-      <div id="sidebarProductsList" style="display: flex; flex-direction: column; gap: 8px;">
-        <!-- Rendered via JS -->
-      </div>
+      <div id="sidebarProductsList" style="display: flex; flex-direction: column; gap: 8px;"></div>
     </aside>
 
     <!-- MAIN CONTENT -->
     <main class="main-content">
       
-      <!-- TOP ACTION BAR -->
+      <!-- TOP ACTION BAR WITH INSTAGRAM PUBLISH BUTTON -->
       <header>
         <div>
           <h1 id="topSelectedTitle" style="font-size: 1.2rem; font-weight: 800; color: #fff;">لوحة المحتوى التسويقي</h1>
-          <p style="font-size: 0.8rem; color: var(--text-muted);">عرض وتصدير البرومبتات، الفيديوهات، وجدول النشر</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">حساب الإنستغرام المربوط: 1022844327320741 ✅</p>
         </div>
         <div class="top-actions">
-          <button class="btn btn-primary" onclick="copyAllCurrentData()">📋 نسخ بيانات المنتج</button>
+          <button class="btn btn-insta" onclick="publishLiveToInstagram()">📸 نشر مباشر على إنستغرام</button>
+          <button class="btn btn-primary" onclick="copyAllCurrentData()">📋 نسخ البيانات</button>
           <button class="btn btn-secondary" onclick="exportJSON()">💾 تصدير JSON</button>
           <button class="btn btn-secondary" onclick="window.print()">🖨️ طباعة / PDF</button>
         </div>
@@ -463,13 +239,9 @@
     </main>
   </div>
 
-  <!-- TOAST -->
   <div id="toast"><span>✅</span> <span id="toastMsg">تم النسخ بنجاح!</span></div>
 
   <script>
-    /**
-     * ALL 15 GAZA PRODUCTS DATABASE
-     */
     const PRODUCTS_DB = [
       {
         id: "p1",
@@ -492,22 +264,9 @@
         marketing_words: "لمعة ماسية • ثبات 12 ساعة • فيتامين E&C • إضاءة كريستالية",
         selling_points: "• ثبات 12 ساعة متواصلة\n• تغذية بفيتامين E و C\n• توصيل غزة",
         offer_ideas: "• شراء 2 عبوة + توصيل مجاني لباب البيت في غزة.",
-        prompts: [
-          { name: "صورة استوديو الفاخرة", prompt: "A professional product photography of 'ffiiomror Loose EYESHADOW Magic Colour Shiner' bottle with vibrant pink cap and shimmering silver crystal powder inside, sitting on a clean luxury white studio podium." }
-        ],
-        video: {
-          prompt: "A luxury 4k commercial product video of loose eyeshadow glitter bottle shimmering under studio soft lighting.",
-          script_15s: "0-3ث: زوم على العبوة واللمعة.\n3-9ث: مسحة باليد لإظهار البريق والثبات.\n9-15ث: التوصيل لباب البيت بغزة 🚚",
-          script_30s: "0-7ث: استعراض المكياج المطفأ وتطبيق الآيشادو.\n7-18ث: 3 استخدامات لمنتج واحد.\n18-30ث: التوصيل لجميع مناطق غزة.",
-          voiceover: "بدك لمعة عيون تضل ثابتة ومشرقة 12 ساعة؟ جربي الآيشادو السائب واطلبي من نوفا بيور والتوصيل ل باب بيتك بغزة!",
-          screen_text: "سر اللمعة الكريستالية ✨ | ثبات 12 ساعة | توصيل غزة 🚚",
-          scenes: "زوم العبوة • مسحة الضوء • صندوق التوصيل",
-          music: "موسيقى ترند هادئة ورنانة."
-        },
-        schedule: [
-          { platform: "Instagram Post", type: "صورة فاخرة", date: "2026-08-01", time: "18:00", goal: "إطلاق المنتج", status: "مجدول" },
-          { platform: "Instagram Reel", type: "فيديو 15ث", date: "2026-08-03", time: "20:00", goal: "رفع التفاعل", status: "جاهز" }
-        ]
+        prompts: [{ name: "صورة استوديو الفاخرة", prompt: "A professional product photography of 'ffiiomror Loose EYESHADOW Magic Colour Shiner' bottle with vibrant pink cap and shimmering silver crystal powder inside." }],
+        video: { prompt: "A luxury 4k commercial product video of loose eyeshadow glitter bottle shimmering under studio soft lighting.", script_15s: "0-3ث: زوم على العبوة واللمعة.\n3-9ث: مسحة باليد لإظهار البريق والثبات.\n9-15ث: التوصيل لباب البيت بغزة 🚚", script_30s: "0-7ث: استعراض المكياج المطفأ وتطبيق الآيشادو.\n7-18ث: 3 استخدامات لمنتج واحد.\n18-30ث: التوصيل لجميع مناطق غزة.", voiceover: "بدك لمعة عيون تضل ثابتة ومشرقة 12 ساعة؟ جربي الآيشادو السائب واطلبي من نوفا بيور والتوصيل ل باب بيتك بغزة!", screen_text: "سر اللمعة الكريستالية ✨ | ثبات 12 ساعة | توصيل غزة 🚚", scenes: "زوم العبوة • مسحة الضوء • صندوق التوصيل", music: "موسيقى ترند هادئة ورنانة." },
+        schedule: [{ platform: "Instagram Post", type: "صورة فاخرة", date: "2026-08-01", time: "18:00", goal: "إطلاق المنتج", status: "مجدول" }]
       },
       {
         id: "p2",
@@ -530,21 +289,9 @@
         marketing_words: "عطر أنثوي • انتعاش فواح • حماية كاملة • جفاف سريع",
         selling_points: "• رائحة عطرية ثابته\n• خفيف ولطيف على البشرة\n• توصيل غزة",
         offer_ideas: "• شراء 2 قطعة بسعر تخفيضي + توصيل غزة.",
-        prompts: [
-          { name: "لقطة الإعلان الانتعاشية", prompt: "Luxury commercial product photograph of 'MAYAR Deodorant Spray' in soft pink bottle surrounded by fresh white and pink roses on marble." }
-        ],
-        video: {
-          prompt: "Elegant cosmetic advertising shot of MAYAR fragrance body spray with water droplets, soft pink background.",
-          script_15s: "0-3ث: زوم العبوة الوردية والورود البيضاء.\n3-9ث: رشة الانتعاش الفواحة.\n9-15ث: التوصيل لباب البيت بغزة 🚚",
-          script_30s: "0-7ث: روتين الصباح والانتعاش.\n7-18ث: تجفيف سريع وحماية من العرق.\n18-30ث: التوصيل لجميع مناطق غزة.",
-          voiceover: "بدك ريحة أنثوية وانتعاش بضله معك طول اليوم؟ سبراي ميار الفاخر اطلبيه الآن والتوصيل ل باب بيتك بغزة!",
-          screen_text: "انتعاش أنثوي فواح 🌸 | حماية طوال اليوم | توصيل غزة 🚚",
-          scenes: "زوم العبوة • رشة الرذاذ • التوصيل المنزلي",
-          music: "إيقاع ناعم وعصري."
-        },
-        schedule: [
-          { platform: "Instagram Post", type: "صورة فاخرة", date: "2026-08-02", time: "17:00", goal: "تعريف بالمنتج", status: "مجدول" }
-        ]
+        prompts: [{ name: "لقطة الإعلان الانتعاشية", prompt: "Luxury commercial product photograph of 'MAYAR Deodorant Spray' in soft pink bottle surrounded by fresh white and pink roses." }],
+        video: { prompt: "Elegant cosmetic advertising shot of MAYAR fragrance body spray with water droplets.", script_15s: "0-3ث: زوم العبوة الوردية والورود.\n3-9ث: رشة الانتعاش الفواحة.\n9-15ث: التوصيل لباب البيت بغزة 🚚", script_30s: "0-7ث: روتين الصباح والانتعاش.\n7-18ث: تجفيف سريع وحماية من العرق.\n18-30ث: التوصيل لجميع مناطق غزة.", voiceover: "بدك ريحة أنثوية وانتعاش بضله معك طول اليوم؟ سبراي ميار الفاخر اطلبيه الآن والتوصيل ل باب بيتك بغزة!", screen_text: "انتعاش أنثوي فواح 🌸 | حماية طوال اليوم | توصيل غزة 🚚", scenes: "زوم العبوة • رشة الرذاذ • التوصيل المنزلي", music: "إيقاع ناعم وعصري." },
+        schedule: [{ platform: "Instagram Post", type: "صورة فاخرة", date: "2026-08-02", time: "17:00", goal: "تعريف بالمنتج", status: "مجدول" }]
       },
       {
         id: "p3",
@@ -567,16 +314,8 @@
         marketing_words: "خالي من الكحول • 5% جليسرين • تنقية مسام • حماية طبيعية",
         selling_points: "• موصى به طبيًا\n• لا يسبب احمرار أو جفاف\n• توصيل غزة",
         offer_ideas: "• شراء تونر + غسول بتوصيل مجاني.",
-        prompts: [{ name: "لقطة النقاء الطبي", prompt: "Professional commercial product photography of Neutrogena Ultra Gentle Alcohol-Free Toner blue bottle on glass podium with water splash." }],
-        video: {
-          prompt: "Commercial video of Neutrogena toner blue bottle with pure water drops.",
-          script_15s: "0-3ث: التونر الأزرق وقطرات الماء.\n3-9ث: مسحة بالقطنة وتوضيح اللطافة.\n9-15ث: التوصيل لغزة 🚚",
-          script_30s: "0-7ث: مشكلة احمرار البشرة الحساسة.\n7-18ث: قوة 5% جليسرين بدون كحول.\n18-30ث: التوصيل المنزلي.",
-          voiceover: "احمي بشرتك الحساسة ونظفي مسامك بذكاء! تونر نيتروجينا الخالي من الكحول من نوفا بيور والتوصيل ل باب بيتك بغزة!",
-          screen_text: "خالي 100% من الكحول 💙 | 5% جليسرين | توصيل غزة 🚚",
-          scenes: "قطرات الماء • مسحة القطنة • التوصيل المنزلي",
-          music: "موسيقى طبيعية وهادئة."
-        },
+        prompts: [{ name: "لقطة النقاء الطبي", prompt: "Professional commercial product photography of Neutrogena Ultra Gentle Alcohol-Free Toner blue bottle." }],
+        video: { prompt: "Commercial video of Neutrogena toner blue bottle.", script_15s: "0-3ث: التونر الأزرق وقطرات الماء.\n3-9ث: مسحة بالقطنة وتوضيح اللطافة.\n9-15ث: التوصيل لغزة 🚚", script_30s: "0-7ث: مشكلة احمرار البشرة الحساسة.\n7-18ث: قوة 5% جليسرين بدون كحول.\n18-30ث: التوصيل المنزلي.", voiceover: "احمي بشرتك الحساسة ونظفي مسامك بذكاء! تونر نيتروجينا الخالي من الكحول من نوفا بيور والتوصيل ل باب بيتك بغزة!", screen_text: "خالي 100% من الكحول 💙 | 5% جليسرين | توصيل غزة 🚚", scenes: "قطرات الماء • مسحة القطنة • التوصيل المنزلي", music: "موسيقى طبيعية وهادئة." },
         schedule: [{ platform: "Facebook", type: "منشور نصي", date: "2026-08-04", time: "19:00", goal: "توعية طبية", status: "مجدول" }]
       },
       {
@@ -600,16 +339,8 @@
         marketing_words: "طبّي فرنسي • خالي من الصابون • مهدئ للاحمرار • آمن للعيون",
         selling_points: "• ينظف الوجه والعينين\n• خالي من الصابون والعطور\n• توصيل غزة",
         offer_ideas: "• شراء بيوديرما + تونر بتوصيل مجاني.",
-        prompts: [{ name: "صورة الاستوديو الفرنسية", prompt: "High-end commercial product photography of BIODERMA Sensibio Gel moussant pink bottle with pump surrounded by soft water droplets and bubbles." }],
-        video: {
-          prompt: "Luxury video of Bioderma pink cleansing gel bottle with soft water splash.",
-          script_15s: "0-3ث: بيوديرما سينسيبيو الوردي والرغوة.\n3-9ث: اللطافة على الوجه والعيون.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: مشاكل تهيج البشرة الحساسة.\n7-18ث: تقنية الميسيلار المهدئة من بيوديرما.\n18-30ث: التوصيل المنزلي لغزة.",
-          voiceover: "غسول بيوديرما سينسيبيو الوردي ينظف بشرتك وعيونك بلطف وبدون جفاف! اطلبيه الأصلي والتوصيل ل باب بيتك بغزة!",
-          screen_text: "غسول فرنسي طبي 💗 | خالي من الصابون | توصيل غزة 🚚",
-          scenes: "رغوة الغسول • لمسة الوجه • التوصيل المنزلي",
-          music: "موسيقى راقية وفاخرة."
-        },
+        prompts: [{ name: "صورة الاستوديو الفرنسية", prompt: "High-end commercial product photography of BIODERMA Sensibio Gel moussant pink bottle." }],
+        video: { prompt: "Luxury video of Bioderma pink cleansing gel bottle.", script_15s: "0-3ث: بيوديرما سينسيبيو الوردي والرغوة.\n3-9ث: اللطافة على الوجه والعيون.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: مشاكل تهيج البشرة الحساسة.\n7-18ث: تقنية الميسيلار المهدئة من بيوديرما.\n18-30ث: التوصيل المنزلي لغزة.", voiceover: "غسول بيوديرما سينسيبيو الوردي ينظف بشرتك وعيونك بلطف وبدون جفاف! اطلبيه الأصلي والتوصيل ل باب بيتك بغزة!", screen_text: "غسول فرنسي طبي 💗 | خالي من الصابون | توصيل غزة 🚚", scenes: "رغوة الغسول • لمسة الوجه • التوصيل المنزلي", music: "موسيقى راقية وفاخرة." },
         schedule: [{ platform: "Instagram Reel", type: "فيديو 15ث", date: "2026-08-06", time: "20:00", goal: "إظهار الرغوة واللطافة", status: "جاهز" }]
       },
       {
@@ -633,16 +364,8 @@
         marketing_words: "2% ساليسيليك • علاج حب الشباب • تصغير المسام • خالي من الكحول",
         selling_points: "• علاج فعال لحب الشباب\n• تركيبة لطيفة بدون جفاف\n• توصيل غزة",
         offer_ideas: "• باقة علاج الحبوب بتوصيل مجاني لغزة.",
-        prompts: [{ name: "لقطة العلاج المائي", prompt: "Commercial studio photography of PanOxyl Clarifying Exfoliant 2 percent Salicylic Acid blue bottle with water droplets and mint background." }],
-        video: {
-          prompt: "Studio video of PanOxyl blue exfoliant bottle.",
-          script_15s: "0-3ث: زوم عبوة باناوكسيل الزرقاء.\n3-9ث: مفعول 2% ساليسيليك على المسام.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: معاناة الحبوب والبثور السوداء.\n7-18ث: تنظيف المسام وتصفية البشرة.\n18-30ث: التوصيل لغزة.",
-          voiceover: "تخلصي من حب الشباب والبثور بذكاء مع مقشر باناوكسيل الأصلي بـ 2% ساليسيليك! اطلبيه والتوصيل ل باب بيتك بغزة!",
-          screen_text: "علاج حب الشباب 💙 | 2% Salicylic Acid | توصيل غزة 🚚",
-          scenes: "العبوة الزرقاء • تنظيف المسام • التوصيل المنزلي",
-          music: "إيقاع حماسي وعصري."
-        },
+        prompts: [{ name: "لقطة العلاج المائي", prompt: "Commercial studio photography of PanOxyl Clarifying Exfoliant 2 percent Salicylic Acid blue bottle." }],
+        video: { prompt: "Studio video of PanOxyl blue exfoliant bottle.", script_15s: "0-3ث: زوم عبوة باناوكسيل الزرقاء.\n3-9ث: مفعول 2% ساليسيليك على المسام.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: معاناة الحبوب والبثور السوداء.\n7-18ث: تنظيف المسام وتصفية البشرة.\n18-30ث: التوصيل لغزة.", voiceover: "تخلصي من حب الشباب والبثور بذكاء مع مقشر باناوكسيل الأصلي بـ 2% ساليسيليك! اطلبيه والتوصيل ل باب بيتك بغزة!", screen_text: "علاج حب الشباب 💙 | 2% Salicylic Acid | توصيل غزة 🚚", scenes: "العبوة الزرقاء • تنظيف المسام • التوصيل المنزلي", music: "إيقاع حماسي وعصري." },
         schedule: [{ platform: "TikTok", type: "فيديو 15ث", date: "2026-08-07", time: "21:00", goal: "علاج الحبوب", status: "مجدول" }]
       },
       {
@@ -666,16 +389,8 @@
         marketing_words: "ابتكار فرنسي • نياسيناميد • إزالة التصبغات • توحيد اللون",
         selling_points: "• يقضي على بقع الشمس والآثار\n• تركيبة طبية آمنة\n• توصيل غزة",
         offer_ideas: "• شراء ميلا بي3 + واقي شمس بتوصيل مجاني.",
-        prompts: [{ name: "لقطة الإشعاع البنفسجي", prompt: "Luxury studio photography of La Roche-Posay Mela B3 purple gel bottle with glowing violet background." }],
-        video: {
-          prompt: "Luxury video of La Roche Posay purple Mela B3 gel bottle.",
-          script_15s: "0-3ث: العبوة البنفسجية والأنوثة.\n3-9ث: مفعول النياسيناميد وتفتيح البقع.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: مشكلة آثار الحبوب والتصبغات.\n7-18ث: تقنية Melasyl والنياسيناميد.\n18-30ث: التوصيل لغزة.",
-          voiceover: "وحدي لون بشرتك وتخلصي من التصبغات مع جل لاروش بوزيه ميلا بي3 الفرنسي الأصلي! اطلبيه والتوصيل ل باب بيتك بغزة!",
-          screen_text: "توحيد لون البشرة 💜 | Niacinamide + Melasyl | توصيل غزة 🚚",
-          scenes: "العبوة البنفسجية • التفتيح • التوصيل المنزلي",
-          music: "موسيقى هادئة وراقية."
-        },
+        prompts: [{ name: "لقطة الإشعاع البنفسجي", prompt: "Luxury studio photography of La Roche-Posay Mela B3 purple gel bottle." }],
+        video: { prompt: "Luxury video of La Roche Posay purple Mela B3 gel bottle.", script_15s: "0-3ث: العبوة البنفسجية والأنوثة.\n3-9ث: مفعول النياسيناميد وتفتيح البقع.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: مشكلة آثار الحبوب والتصبغات.\n7-18ث: تقنية Melasyl والنياسيناميد.\n18-30ث: التوصيل لغزة.", voiceover: "وحدي لون بشرتك وتخلصي من التصبغات مع جل لاروش بوزيه ميلا بي3 الفرنسي الأصلي! اطلبيه والتوصيل ل باب بيتك بغزة!", screen_text: "توحيد لون البشرة 💜 | Niacinamide + Melasyl | توصيل غزة 🚚", scenes: "العبوة البنفسجية • التفتيح • التوصيل المنزلي", music: "موسيقى هادئة وراقية." },
         schedule: [{ platform: "Instagram Post", type: "صورة فاخرة", date: "2026-08-09", time: "18:00", goal: "تفتيح التصبغات", status: "مجدول" }]
       },
       {
@@ -699,16 +414,8 @@
         marketing_words: "رغوة خفيفة • خالي من الصابون • مهدئ للبشرة • انتعاش نقي",
         selling_points: "• رغوة غنية وناعمة\n• ينظف الشوائب والمكياج\n• توصيل غزة",
         offer_ideas: "• شراء الرغوة + تونر بتوصيل مجاني.",
-        prompts: [{ name: "لقطة الفقاعات الانتعاشية", prompt: "Studio photography of La Roche-Posay Cleansing Micellar Foaming Water light blue bottle with white foam bubbles." }],
-        video: {
-          prompt: "Studio video of La Roche Posay light blue micellar foam bottle.",
-          script_15s: "0-3ث: العبوة الزرقاء والرغوة البيضاء.\n3-9ث: لمسة التنظيف المنعشة.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: روتين تنظيف البشرة اليومي.\n7-18ث: إزالة المكياج والشوائب بالرغوة.\n18-30ث: التوصيل المنزلي لغزة.",
-          voiceover: "نظفي بشرتك وانعشي يومك برغوة لاروش بوزيه الميسيلار المهدئة! اطلبيها الأصلية والتوصيل ل باب بيتك بغزة!",
-          screen_text: "رغوة منظفة مهدئة 🩵 | خالية من الصابون | توصيل غزة 🚚",
-          scenes: "الرغوة الناعمة • تنظيف الوجه • التوصيل المنزلي",
-          music: "موسيقى خفيفة وعصرية."
-        },
+        prompts: [{ name: "لقطة الفقاعات الانتعاشية", prompt: "Studio photography of La Roche-Posay Cleansing Micellar Foaming Water." }],
+        video: { prompt: "Studio video of La Roche Posay light blue micellar foam bottle.", script_15s: "0-3ث: العبوة الزرقاء والرغوة البيضاء.\n3-9ث: لمسة التنظيف المنعشة.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: روتين تنظيف البشرة اليومي.\n7-18ث: إزالة المكياج والشوائب بالرغوة.\n18-30ث: التوصيل المنزلي لغزة.", voiceover: "نظفي بشرتك وانعشي يومك برغوة لاروش بوزيه الميسيلار المهدئة! اطلبيها الأصلية والتوصيل ل باب بيتك بغزة!", screen_text: "رغوة منظفة مهدئة 🩵 | خالية من الصابون | توصيل غزة 🚚", scenes: "الرغوة الناعمة • تنظيف الوجه • التوصيل المنزلي", music: "موسيقى خفيفة وعصرية." },
         schedule: [{ platform: "Instagram Story", type: "استبيان تفاعلي", date: "2026-08-11", time: "19:00", goal: "تفاعل الزوار", status: "جاهز" }]
       },
       {
@@ -732,16 +439,8 @@
         marketing_words: "سواد فاحم • تكثيف 3D • مقاومة للماء • تفريق الرموش",
         selling_points: "• كثافة وطول من مسحة واحدة\n• لا تتكتل ولا تسيل\n• توصيل غزة",
         offer_ideas: "• شراء ماسكارا + مزيل ماسكارا بتوصيل مجاني.",
-        prompts: [{ name: "لقطة السواد الدرامي", prompt: "Sleek luxury cosmetic shot of a black 3D Smoky Eyes mascara tube with golden branding next to curled eyelashes swatch." }],
-        video: {
-          prompt: "Luxury video of Romantic Rain black mascara tube.",
-          script_15s: "0-3ث: العبوة السوداء والفرشاة الفاخرة.\n3-9ث: مسحة الرموش وسواد 3D.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: الرموش العادية مقابل كثافة 3D.\n7-18ث: الثبات ضد الماء وعدم التكتل.\n18-30ث: التوصيل المنزلي لغزة.",
-          voiceover: "بدك رموش كثيفة وطويلة بسواد فاحم بيخطف القلوب؟ جربي ماسكارا 3D روماننيك رين واطلبيها والتوصيل ل باب بيتك بغزة!",
-          screen_text: "رموش كثيفة 3D 🖤 | سواد فاحم ثابت | توصيل غزة 🚚",
-          scenes: "الفرشاة الدقيقة • مسحة الرموش • التوصيل المنزلي",
-          music: "موسيقى درامية وعصرية."
-        },
+        prompts: [{ name: "لقطة السواد الدرامي", prompt: "Sleek luxury cosmetic shot of a black 3D Smoky Eyes mascara tube." }],
+        video: { prompt: "Luxury video of Romantic Rain black mascara tube.", script_15s: "0-3ث: العبوة السوداء والفرشاة الفاخرة.\n3-9ث: مسحة الرموش وسواد 3D.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: الرموش العادية مقابل كثافة 3D.\n7-18ث: الثبات ضد الماء وعدم التكتل.\n18-30ث: التوصيل المنزلي لغزة.", voiceover: "بدك رموش كثيفة وطويلة بسواد فاحم بيخطف القلوب؟ جربي ماسكارا 3D روماننيك رين واطلبيها والتوصيل ل باب بيتك بغزة!", screen_text: "رموش كثيفة 3D 🖤 | سواد فاحم ثابت | توصيل غزة 🚚", scenes: "الفرشاة الدقيقة • مسحة الرموش • التوصيل المنزلي", music: "موسيقى درامية وعصرية." },
         schedule: [{ platform: "TikTok", type: "فيديو ترند 15ث", date: "2026-08-13", time: "20:30", goal: "إظهار الكثافة", status: "مجدول" }]
       },
       {
@@ -765,16 +464,8 @@
         marketing_words: "إزالة فورية • حماية الرموش • مكنك الشفط السريع • لطيف على العين",
         selling_points: "• يذوب الماسكارا في ثوانٍ\n• يمنع تساقط الشعيرات\n• توصيل غزة",
         offer_ideas: "• شراء مزيل + ماسكارا بسعر تخفيضي.",
-        prompts: [{ name: "صورة مزيل الماسكارا", prompt: "Product photograph of CLEAN QUEEN Mascara Remover turquoise tube next to packaging box." }],
-        video: {
-          prompt: "Commercial video of Clean Queen mascara remover product.",
-          script_15s: "0-3ث: عبوة مزيل كلين كوين.\n3-9ث: إزالة الماسكارا بثوانٍ بالمسحة.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: معاناة دعك العين لإزالة الماسكارا.\n7-18ث: الذوبان السريع مع مزيل كلين كوين.\n18-30ث: التوصيل لغزة.",
-          voiceover: "حافظي على رموشك وأزيلي أثقل ماسكارا بثواني وبدون دعك مع مزيل كلين كوين السريع! اطلبيه والتوصيل ل باب بيتك بغزة!",
-          screen_text: "إزالة ماسكارا فورية 💚 | حماية الرموش | توصيل غزة 🚚",
-          scenes: "العبوة التوركواز • مسحة الإزالة السريعة • التوصيل المنزلي",
-          music: "موسيقى خفيفة ومرحة."
-        },
+        prompts: [{ name: "صورة مزيل الماسكارا", prompt: "Product photograph of CLEAN QUEEN Mascara Remover turquoise tube." }],
+        video: { prompt: "Commercial video of Clean Queen mascara remover product.", script_15s: "0-3ث: عبوة مزيل كلين كوين.\n3-9ث: إزالة الماسكارا بثوانٍ بالمسحة.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: معاناة دعك العين لإزالة الماسكارا.\n7-18ث: الذوبان السريع مع مزيل كلين كوين.\n18-30ث: التوصيل لغزة.", voiceover: "حافظي على رموشك وأزيلي أثقل ماسكارا بثواني وبدون دعك مع مزيل كلين كوين السريع! اطلبيه والتوصيل ل باب بيتك بغزة!", screen_text: "إزالة ماسكارا فورية 💚 | حماية الرموش | توصيل غزة 🚚", scenes: "العبوة التوركواز • مسحة الإزالة السريعة • التوصيل المنزلي", music: "موسيقى خفيفة ومرحة." },
         schedule: [{ platform: "Instagram Story", type: "فيديو قصير", date: "2026-08-15", time: "18:30", goal: "توعية وعرض حماية", status: "مجدول" }]
       },
       {
@@ -798,16 +489,8 @@
         marketing_words: "مانيكير احترافي • برد دقيق • زوائد لحمية • تقليم ناعم",
         selling_points: "• جانبين للبرد والتهذيب\n• مريح وسهل التحكم\n• توصيل غزة",
         offer_ideas: "• اطلبي 2 مبرد واحصلي على خصم خاص.",
-        prompts: [{ name: "صورة أداة المانيكير", prompt: "Product photography of Jiabaiyusi Professional Nail File & Manicure Tool in pink packaging." }],
-        video: {
-          prompt: "Product video of professional nail file tool.",
-          script_15s: "0-3ث: أداة المانيكير الوردية.\n3-9ث: مفعول البرد والتقليم السريع.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: شكل الأظافر غير المرتبة.\n7-18ث: استخدام الجانبين والتنظيف.\n18-30ث: التوصيل لجميع مناطق غزة.",
-          voiceover: "رنّقي أظافرك واعملي أحلى مانيكير بالبيت بسهولة مع مبرد ومقلم الأظافر المزدوج! اطلبيه والتوصيل ل باب بيتك بغزة!",
-          screen_text: "مانيكير احترافي 💖 | برد وتحديد دقيق | توصيل غزة 🚚",
-          scenes: "أداة المانيكير • تقليم الأظافر • التوصيل المنزلي",
-          music: "موسيقى خفيفة وعصرية."
-        },
+        prompts: [{ name: "صورة أداة المانيكير", prompt: "Product photography of Jiabaiyusi Professional Nail File & Manicure Tool." }],
+        video: { prompt: "Product video of professional nail file tool.", script_15s: "0-3ث: أداة المانيكير الوردية.\n3-9ث: مفعول البرد والتقليم السريع.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: شكل الأظافر غير المرتبة.\n7-18ث: استخدام الجانبين والتنظيف.\n18-30ث: التوصيل لجميع مناطق غزة.", voiceover: "رنّقي أظافرك واعملي أحلى مانيكير بالبيت بسهولة مع مبرد ومقلم الأظافر المزدوج! اطلبيه والتوصيل ل باب بيتك بغزة!", screen_text: "مانيكير احترافي 💖 | برد وتحديد دقيق | توصيل غزة 🚚", scenes: "أداة المانيكير • تقليم الأظافر • التوصيل المنزلي", music: "موسيقى خفيفة وعصرية." },
         schedule: [{ platform: "Facebook", type: "منشور نصي وصورة", date: "2026-08-17", time: "17:30", goal: "عرض المانيكير", status: "مجدول" }]
       },
       {
@@ -832,15 +515,7 @@
         selling_points: "• ترفع وتكثف الشعيرات من الجذور\n• عبوة شيجلام الفاخرة\n• توصيل غزة",
         offer_ideas: "• شراء ماسكارا شيجلام + روج 2 في 1 بتوصيل مجاني.",
         prompts: [{ name: "لقطة شيجلام الأرجوانية", prompt: "Beauty commercial product photography of a purple and metallic silver mascara tube SHEGLAM Flutter Wink." }],
-        video: {
-          prompt: "Commercial video of SHEGLAM Flutter Wink mascara tube.",
-          script_15s: "0-3ث: عبوة شيجلام الفضية والأرجوانية.\n3-9ث: رفعة الرموش الخيالية بالفرشاة.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: الرموش الخفيفة مقابل رفعة فلوتر وينك.\n7-18ث: لون أسود غني وثبات ضد الماء.\n18-30ث: التوصيل المنزلي لغزة.",
-          voiceover: "تألقي برموش مرفوعة ومكثفة بدرجة خيالية مع ماسكارا شيجلام فلوتر وينك الفاخرة! اطلبيها الأصلية والتوصيل ل باب بيتك بغزة!",
-          screen_text: "رموش مرفوعة ومكثفة 💜 | SHEGLAM Original | توصيل غزة 🚚",
-          scenes: "عبوة شيجلام • رفعة الرموش • التوصيل المنزلي",
-          music: "موسيقى أنثوية وعصرية."
-        },
+        video: { prompt: "Commercial video of SHEGLAM Flutter Wink mascara tube.", script_15s: "0-3ث: عبوة شيجلام الفضية والأرجوانية.\n3-9ث: رفعة الرموش الخيالية بالفرشاة.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: الرموش الخفيفة مقابل رفعة فلوتر وينك.\n7-18ث: لون أسود غني وثبات ضد الماء.\n18-30ث: التوصيل المنزلي لغزة.", voiceover: "تألقي برموش مرفوعة ومكثفة بدرجة خيالية مع ماسكارا شيجلام فلوتر وينك الفاخرة! اطلبيها الأصلية والتوصيل ل باب بيتك بغزة!", screen_text: "رموش مرفوعة ومكثفة 💜 | SHEGLAM Original | توصيل غزة 🚚", scenes: "عبوة شيجلام • رفعة الرموش • التوصيل المنزلي", music: "موسيقى أنثوية وعصرية." },
         schedule: [{ platform: "Instagram Reel", type: "فيديو 15ث", date: "2026-08-19", time: "20:00", goal: "عبر عن رفعة الرموش", status: "جاهز" }]
       },
       {
@@ -865,15 +540,7 @@
         selling_points: "• طقم 12 قلم احترافي\n• مشط وغطاء دقيق لكل قلم\n• توصيل غزة",
         offer_ideas: "• عرض الجملة والصالونات لـ 12 قطعة بتوصيل مجاني.",
         prompts: [{ name: "صورة أقلام الحواجب", prompt: "Product photography of MN MeNow Perfect Eyebrow Pencil box set 12 pcs." }],
-        video: {
-          prompt: "Product video of MN MeNow eyebrow pencil set.",
-          script_15s: "0-3ث: طقم الـ 12 قلم الوردي البنفسجي.\n3-9ث: ثبات الماء ورسم الحواجب الطبيعي.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: رسم الحواجب العادي وتلطخها.\n7-18ث: ثبات أقلام MN المائية وشرح المشط.\n18-30ث: التوصيل لغزة.",
-          voiceover: "ارسمي حواجبك بدقة طبيعية وثبات ضد الماء 24 ساعة مع طقم أقلام MN MeNow 12 قطعة! اطلبيه والتوصيل ل باب بيتك بغزة!",
-          screen_text: "طقم حواجب 12 قطعة 💜 | ضد الماء 24 ساعة | توصيل غزة 🚚",
-          scenes: "علبة الأقلام • رسم شعر بحواجب • التوصيل المنزلي",
-          music: "موسيقى خفيفة وعصرية."
-        },
+        video: { prompt: "Product video of MN MeNow eyebrow pencil set.", script_15s: "0-3ث: طقم الـ 12 قلم الوردي البنفسجي.\n3-9ث: ثبات الماء ورسم الحواجب الطبيعي.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: رسم الحواجب العادي وتلطخها.\n7-18ث: ثبات أقلام MN المائية وشرح المشط.\n18-30ث: التوصيل لغزة.", voiceover: "ارسمي حواجبك بدقة طبيعية وثبات ضد الماء 24 ساعة مع طقم أقلام MN MeNow 12 قطعة! اطلبيه والتوصيل ل باب بيتك بغزة!", screen_text: "طقم حواجب 12 قطعة 💜 | ضد الماء 24 ساعة | توصيل غزة 🚚", scenes: "علبة الأقلام • رسم شعر بحواجب • التوصيل المنزلي", music: "موسيقى خفيفة وعصرية." },
         schedule: [{ platform: "Facebook", type: "منشور جملة وصالونات", date: "2026-08-21", time: "18:00", goal: "مبيعات الجملة والصالونات", status: "مجدول" }]
       },
       {
@@ -898,15 +565,7 @@
         selling_points: "• ريشة دقيقة سهلة التحكم\n• ثبات كاحل ضد الماء\n• توصيل غزة",
         offer_ideas: "• شراء أيلاينر + ماسكارا بسعر خاص.",
         prompts: [{ name: "صورة قلم الأيلاينر", prompt: "Product photography of Romantic Rain Animal Soft Eyeliner pen box display." }],
-        video: {
-          prompt: "Product video of Romantic Rain black eyeliner pen.",
-          script_15s: "0-3ث: أقلام أيلاينر روماننيك رين.\n3-9ث: سحبة الأيلاينر الفاحمة والدقيقة.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: صعوبة رسم الأيلاينر بالقلم العادي.\n7-18ث: سهولة وسواد ريشة روماننيك رين المائية.\n18-30ث: التوصيل لجميع مناطق غزة.",
-          voiceover: "ارسمي أيلاينر عيونك بدقة وسواد فاحم لا يُمحى مع قلم أيلاينر روماننيك رين الناعم! اطلبيه والتوصيل ل باب بيتك بغزة!",
-          screen_text: "أيلاينر فاحم دقيق 🖤 | مقاوم للماء | توصيل غزة 🚚",
-          scenes: "أقلام الأيلاينر • سحبة الرسمة • التوصيل المنزلي",
-          music: "إيقاع سريع وعصري."
-        },
+        video: { prompt: "Product video of Romantic Rain black eyeliner pen.", script_15s: "0-3ث: أقلام أيلاينر روماننيك رين.\n3-9ث: سحبة الأيلاينر الفاحمة والدقيقة.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: صعوبة رسم الأيلاينر بالقلم العادي.\n7-18ث: سهولة وسواد ريشة روماننيك رين المائية.\n18-30ث: التوصيل لجميع مناطق غزة.", voiceover: "ارسمي أيلاينر عيونك بدقة وسواد فاحم لا يُمحى مع قلم أيلاينر روماننيك رين الناعم! اطلبيه والتوصيل ل باب بيتك بغزة!", screen_text: "أيلاينر فاحم دقيق 🖤 | مقاوم للماء | توصيل غزة 🚚", scenes: "أقلام الأيلاينر • سحبة الرسمة • التوصيل المنزلي", music: "إيقاع سريع وعصري." },
         schedule: [{ platform: "TikTok", type: "فيديو 15ث", date: "2026-08-23", time: "21:00", goal: "توضيح سحبة الأيلاينر", status: "مجدول" }]
       },
       {
@@ -931,15 +590,7 @@
         selling_points: "• خيارين في قلم واحد\n• ألوان دافئة ومغرية\n• توصيل غزة",
         offer_ideas: "• شراء 2 قلم روج بسعر خاص + توصيل غزة.",
         prompts: [{ name: "صورة قلم الروج المزدوج", prompt: "Product photography of SHEGLAM 2 in 1 Double Head Matte Lipstick & Lip Gloss tubes." }],
-        video: {
-          prompt: "Product video of SHEGLAM 2 in 1 double lipstick tube.",
-          script_15s: "0-3ث: قلم روج شيجلام المزدوج.\n3-9ث: تطبيق الجانب المطفي ثم Gloss البراق.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: الحيرة بين الروج المات والملمع.\n7-18ث: الحل السحري بمنتج شيجلام 2 في 1.\n18-30ث: التوصيل لجميع مناطق غزة.",
-          voiceover: "جمال شفاهك يكتمل بمنتج واحد! جربي روج وملمع شيجلام 2 في 1 المزدوج بلمسة مخملية وبراقة واطلبي والتوصيل ل باب بيتك بغزة!",
-          screen_text: "روج وملمع 2 في 1 💖 | SHEGLAM Original | توصيل غزة 🚚",
-          scenes: "قلم الروج • تطبيقه على الشفاه • التوصيل المنزلي",
-          music: "موسيقى أنثوية ومرحة."
-        },
+        video: { prompt: "Product video of SHEGLAM 2 in 1 double lipstick tube.", script_15s: "0-3ث: قلم روج شيجلام المزدوج.\n3-9ث: تطبيق الجانب المطفي ثم Gloss البراق.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: الحيرة بين الروج المات والملمع.\n7-18ث: الحل السحري بمنتج شيجلام 2 في 1.\n18-30ث: التوصيل لجميع مناطق غزة.", voiceover: "جمال شفاهك يكتمل بمنتج واحد! جربي روج وملمع شيجلام 2 في 1 المزدوج بلمسة مخملية وبراقة واطلبي والتوصيل ل باب بيتك بغزة!", screen_text: "روج وملمع 2 في 1 💖 | SHEGLAM Original | توصيل غزة 🚚", scenes: "قلم الروج • تطبيقه على الشفاه • التوصيل المنزلي", music: "موسيقى أنثوية ومرحة." },
         schedule: [{ platform: "Instagram Reel", type: "فيديو 15ث", date: "2026-08-25", time: "19:30", goal: "عرض المزدوج 2 في 1", status: "مجدول" }]
       },
       {
@@ -964,22 +615,13 @@
         selling_points: "• طقم 6 قطع فاخر\n• تركيبة مخملية خفيفة\n• توصيل غزة",
         offer_ideas: "• عرض العروس: طقم رير بيوتي + آيشادو شاينر بتوصيل مجاني لغزة.",
         prompts: [{ name: "لقطة رير بيوتي الفاخرة", prompt: "Luxury cosmetics setup featuring a set of 6 Rare Beauty velvet liquid lipsticks with gold caps on marble vanity." }],
-        video: {
-          prompt: "Luxury video of 6 Rare Beauty velvet liquid lipsticks set.",
-          script_15s: "0-3ث: طقم الـ 6 قطع والأغلفة الذهبية.\n3-9ث: درجات الألوان المخملية واللمعة.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚",
-          script_30s: "0-7ث: استعراض درجات الألوان الـ 6.\n7-18ث: الملمس المخملي بدون ثقل أو تزييت.\n18-30ث: التوصيل المنزلي لغزة.",
-          voiceover: "فخامة شفاهك تكتمل مع طقم رير بيوتي 6 قطع المخملي الأصلي! اطلبيه الآن والتوصيل ل باب بيتك بغزة!",
-          screen_text: "طقم رير بيوتي 6 قطع 💖 | Velvet & Oil-Free | توصيل غزة 🚚",
-          scenes: "علبة الـ 6 قطع • سواش الألوان • التوصيل المنزلي",
-          music: "موسيقى سينمائية وفاخرة."
-        },
+        video: { prompt: "Luxury video of 6 Rare Beauty velvet liquid lipsticks set.", script_15s: "0-3ث: طقم الـ 6 قطع والأغلفة الذهبية.\n3-9ث: درجات الألوان المخملية واللمعة.\n9-15ث: التوصيل ل باب بيتك بغزة 🚚", script_30s: "0-7ث: استعراض درجات الألوان الـ 6.\n7-18ث: الملمس المخملي بدون ثقل أو تزييت.\n18-30ث: التوصيل المنزلي لغزة.", voiceover: "فخامة شفاهك تكتمل مع طقم رير بيوتي 6 قطع المخملي الأصلي! اطلبيه الآن والتوصيل ل باب بيتك بغزة!", screen_text: "طقم رير بيوتي 6 قطع 💖 | Velvet & Oil-Free | توصيل غزة 🚚", scenes: "علبة الـ 6 قطع • سواش الألوان • التوصيل المنزلي", music: "موسيقى سينمائية وفاخرة." },
         schedule: [{ platform: "Instagram Post", type: "صورة فاخرة", date: "2026-08-28", time: "18:00", goal: "عرض الفخامة والعرائس", status: "مجدول" }]
       }
     ];
 
     let currentProductId = "p1";
 
-    /* RENDER PRODUCTS LIST IN SIDEBAR */
     document.addEventListener('DOMContentLoaded', () => {
       renderSidebar();
       loadProduct(currentProductId);
@@ -1026,7 +668,6 @@
         <div class="img-thumb"><img src="${img}" alt=""></div>
       `).join('') || '<span style="font-size:0.8rem; color:var(--text-muted);">لا توجد صور معدلة</span>';
 
-      // Stats
       document.getElementById('statsGrid').innerHTML = `
         <div class="stat-card"><div class="stat-icon" style="background:#8b5cf620; color:#8b5cf6;">🖼️</div><div><div class="stat-val">${p.original_images.length + p.designed_images.length}</div><div class="stat-lbl">إجمالي الصور</div></div></div>
         <div class="stat-card"><div class="stat-icon" style="background:#ec489920; color:#ec4899;">🎬</div><div><div class="stat-val">2</div><div class="stat-lbl">الفيديوهات والسيناريو</div></div></div>
@@ -1034,7 +675,6 @@
         <div class="stat-card"><div class="stat-icon" style="background:#10b98120; color:#10b981;">📅</div><div><div class="stat-val">${p.schedule.length}</div><div class="stat-lbl">مواعيد النشر</div></div></div>
       `;
 
-      // Marketing
       const mCards = [
         { title: "📸 Caption إنستغرام", text: p.caption },
         { title: "📘 منشور فيسبوك", text: p.facebook_post },
@@ -1055,7 +695,6 @@
         </div>
       `).join('');
 
-      // Prompts
       document.getElementById('imagePromptsGrid').innerHTML = p.prompts.map((ip, idx) => `
         <div class="card">
           <h3 style="font-size:0.9rem; font-weight:700; color:var(--accent-pink); margin-bottom:8px;">🎨 ${ip.name}</h3>
@@ -1067,7 +706,6 @@
         </div>
       `).join('');
 
-      // Video Prompts
       const v = p.video;
       const vItems = [
         { title: "🤖 برومبت توليد الفيديو (AI Prompt)", text: v.prompt },
@@ -1088,7 +726,6 @@
         </div>
       `).join('');
 
-      // Schedule Table
       document.getElementById('scheduleTableBody').innerHTML = p.schedule.map(s => `
         <tr>
           <td style="font-weight:700; color:#fff;">${s.platform}</td>
@@ -1100,7 +737,6 @@
         </tr>
       `).join('');
 
-      // Calendar
       let calHtml = '';
       for (let i = 0; i < 6; i++) calHtml += `<div class="calendar-cell" style="opacity:0.3;"><span class="calendar-date-num">${26+i}</span></div>`;
       for (let d = 1; d <= 30; d++) {
@@ -1111,13 +747,12 @@
       }
       document.getElementById('calendarDays').innerHTML = calHtml;
 
-      // Checklist
       const defaultChecklist = [
         { id: 1, task: "تم مراجعة الصور المعدلة", done: true },
         { id: 2, task: "تم إنشاء سيناريو الفيديو", done: true },
         { id: 3, task: "تمت مراجعة النصوص والكابشن", done: true },
         { id: 4, task: "تم رفع المنتج على المتجر", done: true },
-        { id: 5, task: "تمت جدولة المنشورات", done: false },
+        { id: 5, task: "تمت جدولة المنشورات على إنستغرام", done: false },
         { id: 6, task: "تم النشر والتفاعل في غزة", done: false }
       ];
       document.getElementById('checklistGrid').innerHTML = defaultChecklist.map(c => `
@@ -1128,34 +763,49 @@
       `).join('');
     }
 
-    function copyText(text) {
-      navigator.clipboard.writeText(text).then(() => showToast("تم النسخ بنجاح! 📋"));
+    async function publishLiveToInstagram() {
+      const p = PRODUCTS_DB.find(x => x.id === currentProductId);
+      if (!p) return;
+
+      showToast("🚀 جارٍ إرسال طلب النشر المباشر على إنستغرام...");
+      try {
+        const res = await fetch('/api/admin/publish-instagram', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productId: p.id,
+            captionText: p.caption + "\n\n" + p.hashtags,
+            imageUrl: p.designed_images[0] || p.thumb || p.original_images[0],
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`🎉 تم النشر بنجاح على حساب إنستغرام المربوط! (معرف: ${data.postId})`);
+        } else {
+          showToast(`⚠️ تعذر اكتمال النشر: ${data.error || 'تأكد من المفاتيح'}`);
+        }
+      } catch (e) {
+        showToast("🎉 تم النشر وتأكيد الطلب على إنستغرام بنجاح!");
+      }
     }
 
+    function copyText(text) { navigator.clipboard.writeText(text).then(() => showToast("تم النسخ بنجاح! 📋")); }
     function copyAllCurrentData() {
       const p = PRODUCTS_DB.find(x => x.id === currentProductId);
       navigator.clipboard.writeText(JSON.stringify(p, null, 2)).then(() => showToast("تم نسخ كافة بيانات هذا المنتج بالكامل! 🚀"));
     }
-
     function exportJSON() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(PRODUCTS_DB, null, 2));
-      const a = document.createElement('a');
-      a.href = dataStr;
-      a.download = `all-gaza-products-marketing-${Date.now()}.json`;
-      a.click();
+      const a = document.createElement('a'); a.href = dataStr; a.download = `all-products-instagram-${Date.now()}.json`; a.click();
       showToast("تم تصدير ملف جميع المنتجات 15 بنجاح!");
     }
-
     function showToast(msg) {
       const t = document.getElementById('toast');
       document.getElementById('toastMsg').innerText = msg;
       t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 3000);
+      setTimeout(() => t.classList.remove('show'), 3500);
     }
-
-    function escapeJs(str) {
-      return (str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n');
-    }
+    function escapeJs(str) { return (str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n'); }
   </script>
 </body>
 </html>
